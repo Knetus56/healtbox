@@ -54,7 +54,7 @@ function addCmdToTable(_cmd) {
     tr += '</select></span>';
   }
   tr += '</td><td>';
-  tr += '<textarea class="cmdAttr form-control input-sm" data-l1key="value" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
+  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
   tr += '</td><td>';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:50px;display:inline-block;">';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:50px;display:inline-block;">';
