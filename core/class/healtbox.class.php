@@ -160,7 +160,7 @@ class healtbox extends eqLogic
         $setraindelay->setLogicalId('setraindelay');
         $setraindelay->setEqLogic_id($this->getId());
         $setraindelay->setType('action');
-        $setraindelay->setSubType('slider');
+        $setraindelay->setSubType('message');
         $setraindelay->setConfiguration('minValue',0);
         $setraindelay->setConfiguration('maxValue', 14);
         $setraindelay->setValue($getraindelay->getId());
