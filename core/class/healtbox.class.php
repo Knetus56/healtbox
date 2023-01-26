@@ -172,26 +172,29 @@ class healtbox extends eqLogic {
   /*     * **********************Getteur Setteur*************************** */
 
 }
-
 class healtboxCmd extends cmd {
+	/*     * *************************Attributs****************************** */
+	
+	public static $_widgetPossibility = array('custom' => false);
+	
+	/*     * ***********************Methode static*************************** */
+	
+	/*     * *********************Methode d'instance************************* */
+	
+	public function execute($_options = array()) {
+		if ($this->getLogicalId() == 'refresh') {
+			$this->getEqLogic()->updateWeatherData();
+		}
+		return false;
+	}
+	
+	/*     * **********************Getteur Setteur*************************** */
+}
+
+
+
  
-  public static $_widgetPossibility = ['custom' => false];
- 
- 
-   public function execute($_options = array()) {
-
-
-    if ($this->getLogicalId() == 'auxoff') {
-      $putauxoff = $api->putAux('aux','off');
-    
-  }
-
-
-
-
-
-   }
 
   /*     * **********************Getteur Setteur*************************** */
 
-}
+
