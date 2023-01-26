@@ -135,37 +135,39 @@ class healtbox extends eqLogic
         $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
     }
+	
+		$lockState = $this->getCmd(null, 'lock_state');
+		if (!is_object($lockState)) {
+			$lockState = new healtboxCmd();
+			$lockState->setEqLogic_id($this->getId());
+			$lockState->setLogicalId('lock_state');
+			$lockState->setName(__('Verrouillage', __FILE__));
+			$lockState->setTemplate('dashboard', 'lock');
+			$lockState->setTemplate('mobile', 'lock');
+			$lockState->setIsVisible(1);
+		}
+		$lockState->setType('info');
+		$lockState->setSubType('binary');
+		$lockState->setOrder(0);
+		$lockState->save();
 
+		$unlock = $this->getCmd(null, 'unlock');
+		if (!is_object($unlock)) {
+			$unlock = new healtboxCmd();
+			$unlock->setEqLogic_id($this->getId());
+			$unlock->setLogicalId('unlock');
+			$unlock->setTemplate('dashboard', 'lock');
+			$unlock->setTemplate('mobile', 'lock');
+		}
+		$unlock->setName('Unlock');
+		$unlock->setType('action');
+		$unlock->setSubType('other');
 
-    $getraindelay = $this->getCmd(null, 'getraindelay');
-        if (!is_object($getraindelay)) {
-            $getraindelay = new healtboxCmd();
-        }
-        $getraindelay->setName(__('Stop Irrigation sur un nombre de jours', __FILE__));
-        $getraindelay->setLogicalId('getraindelay');
-        $getraindelay->setEqLogic_id($this->getId());
-        $getraindelay->setType('info');
-        $getraindelay->setSubType('numeric');
-        $getraindelay->setUnite('Jours');
-        $getraindelay->setIsVisible(0);
-        $getraindelay->setConfiguration('minValue',0);
-        $getraindelay->setConfiguration('maxValue', 14);
-        $getraindelay->save();
+			$unlock->setIsVisible(1);
 
-        $setraindelay = $this->getCmd(null, 'setraindelay');
-        if (!is_object($setraindelay)) {
-            $setraindelay = new healtboxCmd();
-        }
-        $setraindelay->setName(__('Retarder arrosage', __FILE__));
-        $setraindelay->setLogicalId('setraindelay');
-        $setraindelay->setEqLogic_id($this->getId());
-        $setraindelay->setType('action');
-        $setraindelay->setSubType('message');
-        $setraindelay->setConfiguration('minValue',0);
-        $setraindelay->setConfiguration('maxValue', 14);
-        $setraindelay->setValue($getraindelay->getId());
-        $setraindelay->save();
-
+		$unlock->setOrder(2);
+		$unlock->setValue($lockState->getId());
+		$unlock->save();
 
 
 
