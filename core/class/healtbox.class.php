@@ -180,8 +180,8 @@ class healtboxCmd extends cmd
     }
   
   
-  
-  
+    $request = $this->getConfiguration("request", "");
+    log::add('healtbox', 'info', $request);
   
   
   
