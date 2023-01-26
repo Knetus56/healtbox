@@ -11,8 +11,8 @@ class healtbox_api {
     {
        
        
-        $this->_data == "";
-        $this->_dataBoost == "";
+        $this->_data = "";
+        $this->_dataBoost = "";
         $this->setip($ip);
         $this->getData();
     }
