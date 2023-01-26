@@ -103,6 +103,7 @@ class healtbox extends eqLogic
     $logic->setType($Type);
     $logic->setUnite($Unit);
     $logic->setSubType($SubType);
+    $logic->setIsHistorized(0);
     $logic->save();
   }
 
