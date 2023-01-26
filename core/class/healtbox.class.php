@@ -49,10 +49,16 @@ class healtbox extends eqLogic
       $this->checkAndUpdateCmd($NamePiece . ':temperature', $api->getTemperature($i));
       $this->checkAndUpdateCmd($NamePiece . ':humidity', $api->getHumidity($i));
       $this->checkAndUpdateCmd($NamePiece . ':profil', $api->getProfil($i));
-    
+      $this->checkAndUpdateCmd($NamePiece . ':debit', $api->getDebit($i));
+      $CO2 = $api->isCO2($i);
+      if ($CO2) {
+        $this->checkAndUpdateCmd($NamePiece . ':CO2', $api->getCO2($i));
+      }
+      $COV = $api->isCOV($i);
+      if ($COV) {
+        $this->checkAndUpdateCmd($NamePiece . ':COV', $api->getCOV($i));
+      }
     }
-
-
 
     $this->refreshWidget();
   }
