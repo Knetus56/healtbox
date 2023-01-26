@@ -53,7 +53,7 @@ class healtbox_api {
     public function getNamePiece($i){
        
         log::add('healtbox','info', $i );
-        return $this->_data['room'][$i]['name']);
+        return $this->_data['room'][$i]['name'];
     } 
     
    
