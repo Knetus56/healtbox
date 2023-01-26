@@ -44,7 +44,7 @@ class healtbox_api
     }
     public function getDevice()
     {
-        return count($this->_data['description']);
+        return $this->_data['description'];
     }
     public function getNbPiece()
     {
