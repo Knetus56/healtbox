@@ -136,21 +136,6 @@ class healtbox extends eqLogic
       }
     }
 	
-		$lockState = $this->getCmd(null, 'lock_state');
-		if (!is_object($lockState)) {
-			$lockState = new healtboxCmd();
-			$lockState->setEqLogic_id($this->getId());
-			$lockState->setLogicalId('lock_state');
-			$lockState->setName(__('Verrouillage', __FILE__));
-			$lockState->setTemplate('dashboard', 'lock');
-			$lockState->setTemplate('mobile', 'lock');
-			$lockState->setIsVisible(1);
-		}
-		$lockState->setType('info');
-		$lockState->setSubType('binary');
-		$lockState->setOrder(0);
-		$lockState->save();
-
 		$unlock = $this->getCmd(null, 'unlock');
 		if (!is_object($unlock)) {
 			$unlock = new healtboxCmd();
@@ -166,7 +151,7 @@ class healtbox extends eqLogic
 			$unlock->setIsVisible(1);
 
 		$unlock->setOrder(2);
-		$unlock->setValue($lockState->getId());
+		$unlock->setValue($this->getId());
 		$unlock->save();
 
 
