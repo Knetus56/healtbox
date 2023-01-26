@@ -27,7 +27,7 @@ $("#table_cmd").sortable({
 /* Fonction permettant l'affichage des commandes dans l'équipement */
 function addCmdToTable(_cmd) {
   if (!isset(_cmd)) {
-    var _cmd = {configuration: {}}
+    var _cmd = { configuration: {} }
   }
   if (!isset(_cmd.configuration)) {
     _cmd.configuration = {}
@@ -35,8 +35,7 @@ function addCmdToTable(_cmd) {
   var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">'
   tr += '<td class="hidden-xs">'
   tr += '<span class="cmdAttr" data-l1key="id"></span>'
-  tr += '</td>'
-  tr += '<td>'
+  tr += '</td><td>';
   tr += '<div class="input-group">'
   tr += '<input class="cmdAttr form-control input-sm roundedLeft" data-l1key="name" placeholder="{{Nom de la commande}}">'
   tr += '<span class="input-group-btn"><a class="cmdAction btn btn-sm btn-default" data-l1key="chooseIcon" title="{{Choisir une icône}}"><i class="fas fa-icons"></i></a></span>'
@@ -45,12 +44,10 @@ function addCmdToTable(_cmd) {
   tr += '<select class="cmdAttr form-control input-sm" data-l1key="value" style="display:none;margin-top:5px;" title="{{Commande info liée}}">'
   tr += '<option value="">{{Aucune}}</option>'
   tr += '</select>'
-  tr += '</td>'
-  tr += '<td>'
+  tr += '</td><td>';
   tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>'
   tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>'
-  tr += '</td>'
-  tr += '<td>'
+  tr += '</td><td>';
   tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isVisible" checked/>{{Afficher}}</label> '
   tr += '<label class="checkbox-inline"><input type="checkbox" class="cmdAttr" data-l1key="isHistorized" checked/>{{Historiser}}</label> '
   tr += '<div style="margin-top:7px;">'
@@ -59,13 +56,14 @@ function addCmdToTable(_cmd) {
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="unite" placeholder="Unité" title="{{Unité}}" style="width:30%;max-width:80px;display:inline-block;margin-right:2px;">'
   tr += '</div>'
   tr += '</td><td>';
-  tr += '<textarea class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="request" style="height:18px;" placeholder="{{Valeur}}"></textarea>';
-  tr += '<a class="btn btn-default btn-sm cursor listEquipementInfo" data-input="request" style="margin-top:5px;"><i class="fas fa-list-alt "></i> {{Rechercher équipement}}</a>';
-  tr +='</select></span>';
+  if (init(_cmd.type) == 'action') {
+    tr += '<textarea class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="request" style="height:18px;" placeholder="{{Valeur}}"></textarea>';
+    tr += '<a class="btn btn-default btn-sm cursor listEquipementInfo" data-input="request" style="margin-top:5px;"><i class="fas fa-list-alt "></i> {{Rechercher équipement}}</a>';
+    tr += '</select></span>';
+  }
   tr += '</td><td>';
-  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
-  tr += '</td>';
-  tr += '<td>'
+  tr += '<textarea class="form-control input-sm" data-key="value" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
+  tr += '</td><td>';
   if (is_numeric(_cmd.id)) {
     tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> '
     tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> Tester</a>'
@@ -75,10 +73,10 @@ function addCmdToTable(_cmd) {
   $('#table_cmd tbody').append(tr)
   var tr = $('#table_cmd tbody tr').last()
   jeedom.eqLogic.buildSelectCmd({
-    id:  $('.eqLogicAttr[data-l1key=id]').value(),
-    filter: {type: 'info'},
+    id: $('.eqLogicAttr[data-l1key=id]').value(),
+    filter: { type: 'info' },
     error: function (error) {
-      $('#div_alert').showAlert({message: error.message, level: 'danger'})
+      $('#div_alert').showAlert({ message: error.message, level: 'danger' })
     },
     success: function (result) {
       tr.find('.cmdAttr[data-l1key=value]').append(result)
