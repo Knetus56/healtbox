@@ -135,9 +135,9 @@ class healtbox extends eqLogic
       }
 
 
-      $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-      $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
-      $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
+    //  $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
+     // $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
+    //  $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
     }
 
