@@ -49,15 +49,27 @@ class healtbox_api
     // ================================================================================
     public function getTemperature($i)
     {
-       return round($this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'], 1);
+        return round($this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'], 1);
     }
     // ================================================================================
     public function getHumidity($i)
     {
-        return round( $this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'], 0);
+        return round($this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'], 0);
     }
     // ================================================================================
-    public function getPPM($i)
+    public function getDebit($i)
+    {
+        $nominal = $this->_data['room'][$i]['parameter']['nominal']['value'];
+        $flow_rate = $this->_data['room'][$i]['actuator'][0]['parameter']['flow_rate']['value'];
+        return round(($flow_rate * 100) / $nominal, 0);
+    }
+    // ================================================================================
+    public function getCO2($i)
+    {
+        return $this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'];
+    }
+    // ================================================================================
+    public function getCOV($i)
     {
         return $this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'];
     }
