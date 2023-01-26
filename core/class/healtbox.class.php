@@ -85,7 +85,7 @@ class healtbox extends eqLogic {
   public function preUpdate() {
     if ($this->getConfiguration('ip') == '') {
       throw new Exception(__('Veuillez entrer une IP', __FILE__));
-  }
+    }
   }
 
   // Fonction exécutée automatiquement après la mise à jour de l'équipement
@@ -98,21 +98,7 @@ class healtbox extends eqLogic {
 
   // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
   public function postSave() {
-    $api = new healtbox_api($this->getConfiguration('ip'));
-    $ap = $api->getNbPiece();
-   // log::add('healtbox','info', $ap );
-   
-    for ($i = 1; $i <= $ap; $i++) {
-     
-      $NamePiece = $api->getNamePiece();
-     
-   //   log::add('healtbox','info', $NamePiece );
-     
-     
-  
-     
-     
-    }
+
    
    
    
@@ -180,32 +166,22 @@ class healtbox extends eqLogic {
 
 class healtboxCmd extends cmd {
  
+  public static $_widgetPossibility = ['custom' => false];
  
  
- 
- 
- 
-  /*     * *************************Attributs****************************** */
-
-  /*
-  public static $_widgetPossibility = array();
-  */
-
-  /*     * ***********************Methode static*************************** */
+   public function execute($_options = array()) {
 
 
-  /*     * *********************Methode d'instance************************* */
-
-  /*
-  * Permet d'empêcher la suppression des commandes même si elles ne sont pas dans la nouvelle configuration de l'équipement envoyé en JS
-  public function dontRemoveCmd() {
-    return true;
+    if ($this->getLogicalId() == 'auxoff') {
+      $putauxoff = $api->putAux('aux','off');
+    
   }
-  */
 
-  // Exécution d'une commande
-  public function execute($_options = array()) {
-  }
+
+
+
+
+   }
 
   /*     * **********************Getteur Setteur*************************** */
 
