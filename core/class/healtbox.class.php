@@ -52,11 +52,11 @@ class healtbox extends eqLogic
       $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':debit', $api->getDebit($i));
       $CO2 = $api->isCO2($i);
       if ($CO2) {
-        $this->checkAndUpdateCmd($NamePiece . ':CO2', $api->getCO2($i));
+        $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':CO2', $api->getCO2($i));
       }
       $COV = $api->isCOV($i);
       if ($COV) {
-        $this->checkAndUpdateCmd($NamePiece . ':COV', $api->getCOV($i));
+        $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
       }
     }
 
