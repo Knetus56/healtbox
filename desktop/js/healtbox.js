@@ -45,8 +45,8 @@ function addCmdToTable(_cmd) {
   tr += '<option value="">{{Aucune}}</option>'
   tr += '</select>'
   tr += '</td><td>';
-  tr += '<span class="type" type="' + init(_cmd.type) + '">' + jeedom.cmd.availableType() + '</span>'
-  tr += '<span class="subType" subType="' + init(_cmd.subType) + '"></span>'
+  tr += '<input class="cmdAttr form-control type input-sm" data-l1key="type" value="info" disabled style="margin-bottom:5px;width:120px;" />';
+  tr += '<span class="cmdAttr subType" subType="' + init(_cmd.subType) + '"></span>';
   tr += '</td><td>';
   if (is_numeric(_cmd.id)) {
     tr += '<textarea class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="request" style="height:18px;" placeholder="{{Valeur}}"></textarea>';
