@@ -22,7 +22,26 @@ require_once __DIR__ . '/../../3rdparty/healtbox_api.class.php';
 class healtbox extends eqLogic
 {
 
+  public function updatehealtbox()
+  {
+    $api = new healtbox_api($this->getConfiguration('ip'));
+    $ap = $api->getNbPiece();
+    //   log::add('healtbox', 'info', $ap);
 
+
+    $this->checkAndUpdateCmd('device_type', $api->getDevice());
+
+    for ($i = 1; $i <= $ap; $i++) {
+
+      $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+
+
+    }
+
+
+
+    $this->refreshWidget();
+  }
   // Fonction exécutée automatiquement avant la création de l'équipement
   public function preInsert()
   {
@@ -70,10 +89,10 @@ class healtbox extends eqLogic
   {
     $api = new healtbox_api($this->getConfiguration('ip'));
     $ap = $api->getNbPiece();
-  //   log::add('healtbox', 'info', $ap);
+    //   log::add('healtbox', 'info', $ap);
 
     $this->setLogical('device_type', 'info', '', 'string');
-   
+
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
@@ -96,15 +115,6 @@ class healtbox extends eqLogic
     }
   }
 
-  // Fonction exécutée automatiquement avant la suppression de l'équipement
-  public function preRemove()
-  {
-  }
-
-  // Fonction exécutée automatiquement après la suppression de l'équipement
-  public function postRemove()
-  {
-  }
 
 
 }
@@ -113,10 +123,6 @@ class healtboxCmd extends cmd
   /*     * *************************Attributs****************************** */
 
   public static $_widgetPossibility = array('custom' => false);
-
-  /*     * ***********************Methode static*************************** */
-
-  /*     * *********************Methode d'instance************************* */
 
   public function execute($_options = array())
   {
