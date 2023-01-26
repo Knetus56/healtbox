@@ -62,7 +62,7 @@ function addCmdToTable(_cmd) {
     tr += '</select></span>';
   }
   tr += '</td><td>';
-  tr += '<textarea class="form-control input-sm" data-key="value" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
+  tr += '<textarea class="form-control input-sm" data-l1key="htmlstate" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
   tr += '</td><td>';
   if (is_numeric(_cmd.id)) {
     tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> '
