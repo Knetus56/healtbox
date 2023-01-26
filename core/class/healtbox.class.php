@@ -116,30 +116,30 @@ class healtbox extends eqLogic
 
     $this->setLogical(0, 'device_type', 'info', '', 'string');
 
-    // for ($i = 1; $i <= $ap; $i++) {
+    for ($i = 1; $i <= $ap; $i++) {
 
-    //   $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-    //   $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
-    //   $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
-    //   $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
-    //   $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
+      $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+      $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
+      $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
+      $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
+      $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
 
-    //   $CO2 = $api->isCO2($i);
-    //   if ($CO2) {
-    //     $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
-    //   }
+      $CO2 = $api->isCO2($i);
+      if ($CO2) {
+        $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
+      }
 
-    //   $COV = $api->isCOV($i);
-    //   if ($COV) {
-    //     $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
-    //   }
+      $COV = $api->isCOV($i);
+      if ($COV) {
+        $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
+      }
 
 
     // //  $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
     //  // $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
     // //  $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
-    // }
+    }
 
     if ($this->getIsEnable() == 1) {
       $this->updatehealtbox();
