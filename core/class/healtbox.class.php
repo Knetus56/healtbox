@@ -114,12 +114,7 @@ class healtbox extends eqLogic {
      
     }
    
-   
-   
-   
-   
-   
-   
+     
     $air = $this->getCmd(null, 'device_type');
     if (!is_object($air)) {
       $air = new healtboxCmd();
