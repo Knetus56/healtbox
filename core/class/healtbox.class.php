@@ -98,7 +98,7 @@ class healtbox extends eqLogic
       $logic = new healtboxCmd();
     }
     $logic->setName(__($Name, __FILE__));
-    $logic->setLogicalId($i  + ':' +$Name);
+    $logic->setLogicalId($i   .  ':'  . $Name);
     $logic->setEqLogic_id($this->getId());
     $logic->setType($Type);
     $logic->setUnite($Unit);
