@@ -104,9 +104,7 @@ class healtbox extends eqLogic {
    
 
      
-      $NamePiece = $api->getNamePiece(1);
-     
-      log::add('healtbox','info', $NamePiece );
+
      
      
   
