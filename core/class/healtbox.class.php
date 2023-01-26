@@ -54,7 +54,7 @@ class healtbox extends eqLogic
   {
     $logic = $this->getCmd(null, $Name);
     if (!is_object($logic)) {
-      $air = new healtboxCmd();
+      $logic = new healtboxCmd();
     }
     $logic->setName(__($Name, __FILE__));
     $logic->setLogicalId($Name);
