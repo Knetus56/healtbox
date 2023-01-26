@@ -139,7 +139,7 @@ class healtbox extends eqLogic
 
     $pompe = $this->getCmd(null, 'pompe');
     if (!is_object($pompe)) {
-      $pompe = new oklynCmd();
+      $pompe = new healtboxCmd();
     }
     $pompe->setName(__('Pompe', __FILE__));
     $pompe->setLogicalId('pompe');
