@@ -177,7 +177,7 @@ class healtbox extends eqLogic {
 }
 
 class healtboxCmd extends cmd {
- 
+  public static $_widgetPossibility = ['custom' => false];
  
  
  
