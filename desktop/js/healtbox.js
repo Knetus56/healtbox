@@ -54,7 +54,7 @@ function addCmdToTable(_cmd) {
     tr += '</select></span>';
   }
   tr += '</td><td>';
-  tr += '<textarea class="form-control input-sm" data-key="value" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
+  tr += '<textarea class="form-control input-sm" data-l1key="htmlstate" style="min-height:65px;" placeholder="{{Valeur}}" readonly=true></textarea>';
   tr += '</td><td>';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:50px;display:inline-block;">';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:50px;display:inline-block;">';
@@ -71,7 +71,7 @@ function addCmdToTable(_cmd) {
   tr += '&nbsp; &nbsp; <i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
   tr += '</td></tr>';
 
-  
+
   $('#table_cmd tbody').append(tr)
   var tr = $('#table_cmd tbody tr').last()
   jeedom.eqLogic.buildSelectCmd({
