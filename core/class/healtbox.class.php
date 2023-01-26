@@ -102,6 +102,24 @@ class healtbox extends eqLogic {
     $ap = $api->getNbPiece();
     log::add('healtbox','info', $ap );
    
+    for ($i = 1; $i <= $ap; $i++) {
+     
+    $NamePiece = $api->getNamePiece();
+     
+    log::add('healtbox','info', $NamePiece );
+     
+     
+     
+     
+     
+  }
+   
+   
+   
+   
+   
+   
+   
     $air = $this->getCmd(null, 'device_type');
     if (!is_object($air)) {
       $air = new healtboxCmd();
