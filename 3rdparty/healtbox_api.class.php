@@ -57,5 +57,13 @@ class healtbox_api
     {
         return $this->_data['room'][$i]['name'];
     }
+    public function isCO2($i)
+    {
+        return false;
+    }
+    public function isCOV($i)
+    {
+        return false;
+    }
 }
 ?>
