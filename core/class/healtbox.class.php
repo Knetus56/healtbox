@@ -50,6 +50,20 @@ class healtbox extends eqLogic
   public function preSave()
   {
   }
+  public function setLogical($Name, $Type, $Unit, $SubType)
+  {
+    $logic = $this->getCmd(null, $Name);
+    if (!is_object($logic)) {
+      $air = new healtboxCmd();
+    }
+    $logic->setName(__($Name, __FILE__));
+    $logic->setLogicalId($Name);
+    $logic->setEqLogic_id($this->getId());
+    $logic->setType($Type);
+    $logic->setUnite($Unit);
+    $logic->setSubType($SubType);
+    $logic->save();
+  }
 
   // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
   public function postSave()
@@ -61,6 +75,8 @@ class healtbox extends eqLogic
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+
+      $this->setLogical('device_type', 'info', '', 'string');
 
       $air = $this->getCmd(null, $NamePiece . ':temperature');
       if (!is_object($air)) {
@@ -160,17 +176,7 @@ class healtbox extends eqLogic
 
 
 
-    $air = $this->getCmd(null, 'device_type');
-    if (!is_object($air)) {
-      $air = new healtboxCmd();
-    }
-    $air->setName(__('device_type', __FILE__));
-    $air->setLogicalId('device_type');
-    $air->setEqLogic_id($this->getId());
-    $air->setType('info');
-    $air->setUnite('');
-    $air->setSubType('string');
-    $air->save();
+
   }
 
   // Fonction exécutée automatiquement avant la suppression de l'équipement
