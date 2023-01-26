@@ -112,6 +112,7 @@ class healtbox extends eqLogic
 
 
       $CO2 = $api->isCO2($i);
+      log::add('healtbox', 'info', $CO2);
       if ($CO2) {
         $air = $this->getCmd(null, $NamePiece . ':CO2');
         if (!is_object($air)) {
