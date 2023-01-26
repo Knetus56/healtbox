@@ -60,7 +60,7 @@ class healtbox extends eqLogic
 
     for ($i = 1; $i <= $ap; $i++) {
 
-      $NamePiece = str_replace($api->getNamePiece($i), " ", "_") ;
+      $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
 
       $air = $this->getCmd(null, $NamePiece . ':temperature');
       if (!is_object($air)) {
@@ -126,7 +126,7 @@ class healtboxCmd extends cmd
     if ($this->getLogicalId() == 'refresh') {
       $this->getEqLogic()->updateWeatherData();
     }
-    
+
   }
 
 }
