@@ -129,9 +129,6 @@ class healtboxCmd extends cmd
 
   public function execute($_options = array())
   {
-    if ($this->getLogicalId() == 'refresh') {
-      $this->getEqLogic()->updateWeatherData();
-    }
 
     return false;
   }
