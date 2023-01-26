@@ -43,6 +43,25 @@ class healtbox_api
         $this->_data = json_decode($json, true);
     }
     // ================================================================================
+    public function put($url, $data)
+    {
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => "http://" . $this->_ip . $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => "PUT",
+            CURLOPT_POSTFIELDS => $data,
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"]
+        ]);
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+        return $response;
+    }
+    // ================================================================================
     public function getDevice()
     {
         return $this->_data['description'];
@@ -117,6 +136,11 @@ class healtbox_api
             return true;
         }
         return false;
+    }
+    // ================================================================================
+    public function changeProfil($i, $profil)
+    {
+        $this->put('/data/current/room/' + $i + '/profile_name', '"' + $profil + '"');
     }
 }
 ?>
