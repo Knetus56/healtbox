@@ -134,29 +134,13 @@ class healtbox extends eqLogic
       if ($COV) {
         $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
+
+
+      $this->setLogical($NamePiece . ':boostON', 'action', '', 'other');
+      $this->setLogical($NamePiece . ':boostOFF', 'action', '', 'other');
+      $this->setLogical($NamePiece . ':changeProfil', 'action', '', 'other');
+
     }
-	
-		$unlock = $this->getCmd(null, 'unlock');
-		if (!is_object($unlock)) {
-			$unlock = new healtboxCmd();
-			$unlock->setEqLogic_id($this->getId());
-			$unlock->setLogicalId('unlock');
-			$unlock->setTemplate('dashboard', 'lock');
-			$unlock->setTemplate('mobile', 'lock');
-		}
-		$unlock->setName('Unlock');
-		$unlock->setType('action');
-		$unlock->setSubType('other');
-
-			$unlock->setIsVisible(1);
-
-		$unlock->setOrder(2);
-		$unlock->setValue($this->getId());
-		$unlock->save();
-
-
-
-
 
     if ($this->getIsEnable() == 1) {
       $this->updatehealtbox();
@@ -178,18 +162,18 @@ class healtboxCmd extends cmd
     if ($this->getType() == 'info') {
       return;
     }
-  
-  
+
+
     $request = $this->getConfiguration("request", "");
     log::add('healtbox', 'info', $request);
-  
-  
-  
-  
-  
-  
-  
-  
+
+
+
+
+
+
+
+
     return false;
   }
 }
