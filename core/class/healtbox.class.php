@@ -17,7 +17,6 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../../3rdparty/healtbox_api.class.php';
 
 class healtbox extends eqLogic {
   /*     * *************************Attributs****************************** */
