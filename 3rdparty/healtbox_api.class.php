@@ -42,8 +42,10 @@ class healtbox_api
         curl_close($session);
         $this->_data = json_decode($json, true);
     }
-
-
+    public function getDevice()
+    {
+        return count($this->_data['description']);
+    }
     public function getNbPiece()
     {
         return count($this->_data['room']);
