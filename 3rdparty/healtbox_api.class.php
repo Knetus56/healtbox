@@ -44,8 +44,11 @@ class healtbox_api {
         return count($this->_data['room']);
     } 
    
-   
-   
+    public function getNamePiece($i){
+       
+        return $this->_data[$i]['name']);
+    } 
+    
    
    
    
