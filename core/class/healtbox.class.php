@@ -99,7 +99,8 @@ class healtbox extends eqLogic {
   // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
   public function postSave() {
     $api = new healtbox_api($this->getConfiguration('ip'));
-
+    $ap = $api->getNbPiece()
+    log::add('healtbox','info', $ap )
    
     $air = $this->getCmd(null, 'device_type');
     if (!is_object($air)) {
