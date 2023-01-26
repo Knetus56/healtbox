@@ -48,6 +48,10 @@ class healtbox_api
     {
         return count($this->_data['room']);
     }
+    private function getNbSensor($i)
+    {
+        return count($this->_data['room'][$i]['sensor']);
+    }
 
     public function getNamePiece($i)
     {
@@ -59,10 +63,25 @@ class healtbox_api
     }
     public function isCO2($i)
     {
-        return false;
+  
+        $json = $this->getNbSensor($i);
+  
+  
+  
+  
+  
+        return $json;
     }
     public function isCOV($i)
     {
+     
+     
+     
+     
+     
+     
+     
+     
         return false;
     }
 }
