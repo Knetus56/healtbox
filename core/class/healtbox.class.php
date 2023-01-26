@@ -113,7 +113,7 @@ class healtbox extends eqLogic
     $ap = $api->getNbPiece();
     //   log::add('healtbox', 'info', $ap);
 
-    // $this->setLogical(0, 'device_type', 'info', '', 'string');
+    $this->setLogical(0, 'device_type', 'info', '', 'string');
 
     for ($i = 1; $i <= $ap; $i++) {
 
@@ -151,8 +151,10 @@ class healtbox extends eqLogic
 // ================================================================================
 class healtboxCmd extends cmd
 {
+  public static $_widgetPossibility = ['custom' => false];
+ 
 
-   public function execute($_options = array())
+  public function execute($_options = array())
   {
 
     if ($this->getType() == 'info') {
