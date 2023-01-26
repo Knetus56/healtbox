@@ -126,8 +126,8 @@ class healtbox extends eqLogic
         $air->setSubType('numeric');
         $air->save();
 
-      }  
-      
+      }
+
       $COV = $api->isCOV($i);
       if ($COV) {
         $air = $this->getCmd(null, $NamePiece . ':COV');
