@@ -137,30 +137,34 @@ class healtbox extends eqLogic
     }
 
 
-    $pompe = $this->getCmd(null, 'pompe');
-    if (!is_object($pompe)) {
-      $pompe = new healtboxCmd();
-    }
-    $pompe->setName(__('Pompe', __FILE__));
-    $pompe->setLogicalId('pompe');
-    $pompe->setEqLogic_id($this->getId());
-    $pompe->setType('info');
-    $pompe->setSubType('string');
-    $pompe->setGeneric_type('GENERIC_INFO');
-    $pompe->save();
+    $getraindelay = $this->getCmd(null, 'getraindelay');
+        if (!is_object($getraindelay)) {
+            $getraindelay = new healtboxCmd();
+        }
+        $getraindelay->setName(__('Stop Irrigation sur un nombre de jours', __FILE__));
+        $getraindelay->setLogicalId('getraindelay');
+        $getraindelay->setEqLogic_id($this->getId());
+        $getraindelay->setType('info');
+        $getraindelay->setSubType('numeric');
+        $getraindelay->setUnite('Jours');
+        $getraindelay->setIsVisible(0);
+        $getraindelay->setConfiguration('minValue',0);
+        $getraindelay->setConfiguration('maxValue', 14);
+        $getraindelay->save();
 
-    $pompeauto = $this->getCmd(null, 'pompeauto');
-    if (!is_object($pompeauto)) {
-      $pompeauto = new healtboxCmd();
-    }
-    $pompeauto->setName(__('Auto', __FILE__));
-    $pompeauto->setLogicalId('pompeauto');
-    $pompeauto->setEqLogic_id($this->getId());
-    $pompeauto->setGeneric_type('GENERIC_ACTION');
-    $pompeauto->setType('action');
-    $pompeauto->setSubType('other');
-    $pompeauto->setValue($pompeauto->getId());
-    $pompeauto->save();
+        $setraindelay = $this->getCmd(null, 'setraindelay');
+        if (!is_object($setraindelay)) {
+            $setraindelay = new healtboxCmd();
+        }
+        $setraindelay->setName(__('Retarder arrosage', __FILE__));
+        $setraindelay->setLogicalId('setraindelay');
+        $setraindelay->setEqLogic_id($this->getId());
+        $setraindelay->setType('action');
+        $setraindelay->setSubType('slider');
+        $setraindelay->setConfiguration('minValue',0);
+        $setraindelay->setConfiguration('maxValue', 14);
+        $setraindelay->setValue($getraindelay->getId());
+        $setraindelay->save();
 
 
 
