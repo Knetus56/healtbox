@@ -98,12 +98,11 @@ class healtbox extends eqLogic
       $logic = new healtboxCmd();
     }
     $logic->setName(__($Name, __FILE__));
-    $logic->setLogicalId($Name);
+    $logic->setLogicalId($i . '_' . $Name);
     $logic->setEqLogic_id($this->getId());
     $logic->setType($Type);
     $logic->setUnite($Unit);
     $logic->setSubType($SubType);
-    $logic->setIsHistorized(0);
     $logic->save();
   }
 
@@ -135,9 +134,9 @@ class healtbox extends eqLogic
       }
 
 
-    // //  $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-    //  // $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
-    // //  $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
+      $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
+      $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
+      $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
     }
 
