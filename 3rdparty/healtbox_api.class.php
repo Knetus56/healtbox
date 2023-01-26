@@ -67,7 +67,7 @@ class healtbox_api
         if ($n < 4) {
             return false;
         }
-        if ($this->_data['room'][$i]['name']['sensor'][2]['type'] == 'indoor CO2') {
+        if ($this->_data['room'][$i]['sensor'][2]['type'] == 'indoor CO2') {
             return true;
         }
         return false;
@@ -78,7 +78,7 @@ class healtbox_api
         if ($n < 4) {
             return false;
         }
-        if ($this->_data['room'][$i]['name']['sensor'][2]['type'] == 'indoor volatile organic compounds') {
+        if ($this->_data['room'][$i]['sensor'][2]['type'] == 'indoor volatile organic compounds') {
             return true;
         }
         return false;
