@@ -113,6 +113,9 @@ class healtbox extends eqLogic
         $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
     }
+    if ($this->getIsEnable() == 1) {
+      $this->updatehealtbox();
+    }
   }
 
 
