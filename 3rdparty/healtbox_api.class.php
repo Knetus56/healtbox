@@ -66,12 +66,12 @@ class healtbox_api
     // ================================================================================
     public function getCO2($i)
     {
-        return $this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'];
+        return round($this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'], 0);
     }
     // ================================================================================
     public function getCOV($i)
     {
-        return $this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'];
+        return round($this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'], 0);
     }
     // ================================================================================
     public function getProfil($i)
