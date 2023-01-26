@@ -41,15 +41,15 @@ class healtbox extends eqLogic
     //   log::add('healtbox', 'info', $ap);
 
 
-    $this->checkAndUpdateCmd('device_type', $api->getDevice());
+    $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
 
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-      $this->checkAndUpdateCmd($NamePiece . ':temperature', $api->getTemperature($i));
-      $this->checkAndUpdateCmd($NamePiece . ':humidity', $api->getHumidity($i));
-      $this->checkAndUpdateCmd($NamePiece . ':profil', $api->getProfil($i));
-      $this->checkAndUpdateCmd($NamePiece . ':debit', $api->getDebit($i));
+      $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':temperature', $api->getTemperature($i));
+      $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':humidity', $api->getHumidity($i));
+      $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':profil', $api->getProfil($i));
+      $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':debit', $api->getDebit($i));
       $CO2 = $api->isCO2($i);
       if ($CO2) {
         $this->checkAndUpdateCmd($NamePiece . ':CO2', $api->getCO2($i));
