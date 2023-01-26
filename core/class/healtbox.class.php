@@ -100,17 +100,19 @@ class healtbox extends eqLogic {
   public function postSave() {
     $api = new healtbox_api($this->getConfiguration('ip'));
     $ap = $api->getNbPiece();
-    log::add('healtbox','info', $ap );
+   // log::add('healtbox','info', $ap );
    
-
+    for ($i = 1; $i <= $ap; $i++) {
      
-
+      $NamePiece = $api->getNamePiece();
+     
+   //   log::add('healtbox','info', $NamePiece );
      
      
   
      
      
-  
+    }
    
    
    
@@ -177,7 +179,7 @@ class healtbox extends eqLogic {
 }
 
 class healtboxCmd extends cmd {
-  public static $_widgetPossibility = ['custom' => false];
+ 
  
  
  
