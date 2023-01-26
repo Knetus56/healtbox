@@ -112,7 +112,7 @@ class healtbox extends eqLogic {
   
      
      
-    }
+  }
    
    
    
