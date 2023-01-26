@@ -1,4 +1,6 @@
 <?php
+
+require_once __DIR__  . '/../../../../core/php/core.inc.php';
 class healtbox_api {
 
 	protected $_ip;
@@ -10,7 +12,7 @@ class healtbox_api {
 	public function __construct($ip)
     {
        
-       
+        log::add('healtbox','info', $ip );
         $this->_data = "";
         $this->_dataBoost = "";
         $this->setip($ip);
@@ -50,6 +52,7 @@ class healtbox_api {
    
     public function getNamePiece($i){
        
+        log::add('healtbox','info', $i );
         return $this->_data['room'][$i]['name']);
     } 
     
