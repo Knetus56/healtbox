@@ -97,7 +97,7 @@ class healtbox extends eqLogic
     if (!is_object($logic)) {
       $logic = new healtboxCmd();
     }
-    $logic->setName(__($Name, __FILE__));
+    $logic->setName(__($i . ':' . $Name, __FILE__));
     $logic->setLogicalId($i . ':' . $Name);
     $logic->setEqLogic_id($this->getId());
     $logic->setType($Type);
@@ -152,7 +152,7 @@ class healtbox extends eqLogic
 class healtboxCmd extends cmd
 {
   public static $_widgetPossibility = ['custom' => true];
- 
+
 
   public function execute($_options = array())
   {
