@@ -15,12 +15,12 @@ class healtbox_api {
 
     public function setip($ip)
     {
-        $this->_IP = $ip;
+        $this->_ip = $ip;
     }
 
     public function getip()
     {
-        return $this->_IP;
+        return $this->_ip;
     }
 
 
@@ -28,7 +28,7 @@ class healtbox_api {
         $session = curl_init();
 
         curl_setopt_array($session, [
-            CURLOPT_URL => "http://". $this->getip().$this->_url_data,            
+            CURLOPT_URL => "http://". $this->_ip . $this->_url_data,            
             CURLOPT_RETURNTRANSFER => true,   
             CURLOPT_HTTPHEADER => ["Content-Type: application/json"]
         ]);
