@@ -66,8 +66,8 @@ class healtbox extends eqLogic
       if (!is_object($air)) {
         $air = new healtboxCmd();
       }
-      $air->setName(__('device_type', __FILE__));
-      $air->setLogicalId('device_type');
+      $air->setName(__($NamePiece . ':temperature', __FILE__));
+      $air->setLogicalId($NamePiece . ':temperature');
       $air->setEqLogic_id($this->getId());
       $air->setType('info');
       $air->setUnite('°C');
@@ -82,7 +82,6 @@ class healtbox extends eqLogic
 
 
 
-    log::add('healtbox', 'info', $NamePiece);
 
 
 
