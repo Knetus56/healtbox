@@ -52,6 +52,10 @@ class healtbox_api
     public function getNamePiece($i)
     {
         return $this->_data['room'][$i]['name'];
+    }  
+    public function getTemperature($i)
+    {
+        return $this->_data['room'][$i]['name'];
     }
 }
 ?>
