@@ -135,6 +135,38 @@ class healtbox extends eqLogic
         $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
     }
+
+
+    $pompe = $this->getCmd(null, 'pompe');
+    if (!is_object($pompe)) {
+      $pompe = new oklynCmd();
+    }
+    $pompe->setName(__('Pompe', __FILE__));
+    $pompe->setLogicalId('pompe');
+    $pompe->setEqLogic_id($this->getId());
+    $pompe->setType('info');
+    $pompe->setSubType('string');
+    $pompe->setGeneric_type('GENERIC_INFO');
+    $pompe->save();
+
+    $pompeauto = $this->getCmd(null, 'pompeauto');
+    if (!is_object($pompeauto)) {
+      $pompeauto = new healtboxCmd();
+    }
+    $pompeauto->setName(__('Auto', __FILE__));
+    $pompeauto->setLogicalId('pompeauto');
+    $pompeauto->setEqLogic_id($this->getId());
+    $pompeauto->setGeneric_type('GENERIC_ACTION');
+    $pompeauto->setType('action');
+    $pompeauto->setSubType('other');
+    $pompeauto->setValue($pompeauto->getId());
+    $pompeauto->save();
+
+
+
+
+
+
     if ($this->getIsEnable() == 1) {
       $this->updatehealtbox();
     }
@@ -151,6 +183,10 @@ class healtboxCmd extends cmd
 
   public function execute($_options = array())
   {
+
+    if ($this->getType() == 'info') {
+      return;
+    }
     return false;
   }
 }
