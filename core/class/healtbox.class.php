@@ -91,14 +91,14 @@ class healtbox extends eqLogic
   }
 
   // ================================================================================
-  public function setLogical($Name, $Type, $Unit, $SubType)
+  public function setLogical($i,$Name, $Type, $Unit, $SubType)
   {
     $logic = $this->getCmd(null, $Name);
     if (!is_object($logic)) {
       $logic = new healtboxCmd();
     }
     $logic->setName(__($Name, __FILE__));
-    $logic->setLogicalId($Name);
+    $logic->setLogicalId($i . ':' +$Name);
     $logic->setEqLogic_id($this->getId());
     $logic->setType($Type);
     $logic->setUnite($Unit);
@@ -113,32 +113,32 @@ class healtbox extends eqLogic
     $ap = $api->getNbPiece();
     //   log::add('healtbox', 'info', $ap);
 
-    $this->setLogical('device_type', 'info', '', 'string');
+    $this->setLogical(0,'device_type', 'info', '', 'string');
 
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
 
-      $this->setLogical('device_type', 'info', '', 'string');
-      $this->setLogical($NamePiece . ':temperature', 'info', '°C', 'numeric');
-      $this->setLogical($NamePiece . ':humidity', 'info', '%', 'numeric');
-      $this->setLogical($NamePiece . ':debit', 'info', '%', 'numeric');
-      $this->setLogical($NamePiece . ':profil', 'info', '', 'numeric');
+      $this->setLogical($i,'device_type', 'info', '', 'string');
+      $this->setLogical($i,$NamePiece . ':temperature', 'info', '°C', 'numeric');
+      $this->setLogical($i,$NamePiece . ':humidity', 'info', '%', 'numeric');
+      $this->setLogical($i,$NamePiece . ':debit', 'info', '%', 'numeric');
+      $this->setLogical($i,$NamePiece . ':profil', 'info', '', 'numeric');
 
       $CO2 = $api->isCO2($i);
       if ($CO2) {
-        $this->setLogical($NamePiece . ':CO2', 'info', 'ppm', 'numeric');
+        $this->setLogical($i,$NamePiece . ':CO2', 'info', 'ppm', 'numeric');
       }
 
       $COV = $api->isCOV($i);
       if ($COV) {
-        $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
+        $this->setLogical($i,$NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
 
 
-      $this->setLogical($NamePiece . ':boostON', 'action', '', 'other');
-      $this->setLogical($NamePiece . ':boostOFF', 'action', '', 'other');
-      $this->setLogical($NamePiece . ':changeProfil', 'action', '', 'other');
+      $this->setLogical($i,$NamePiece . ':boostON', 'action', '', 'other');
+      $this->setLogical($i,$NamePiece . ':boostOFF', 'action', '', 'other');
+      $this->setLogical($i,$NamePiece . ':changeProfil', 'action', '', 'other');
 
     }
 
@@ -167,6 +167,9 @@ class healtboxCmd extends cmd
     $request = $this->getConfiguration("request", "");
     log::add('healtbox', 'info', $request);
 
+    $requ =  $this->getLogicalId();
+
+    log::add('healtbox', 'info', $requ);
 
 
 
