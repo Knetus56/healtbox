@@ -9,6 +9,10 @@ class healtbox_api {
 
 	public function __construct($ip)
     {
+       
+       
+        $this->_data == "";
+        $this->_dataBoost == "";
         $this->setip($ip);
         $this->getData();
     }
