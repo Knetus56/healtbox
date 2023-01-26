@@ -46,7 +46,7 @@ class healtbox_api {
    
     public function getNamePiece($i){
        
-        return $this->_data[$i]['name']);
+        return $this->_data['room'][$i]['name']);
     } 
     
    
