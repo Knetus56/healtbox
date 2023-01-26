@@ -49,12 +49,12 @@ class healtbox_api
     // ================================================================================
     public function getTemperature($i)
     {
-       return round($this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'], 1)
+       return round($this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'], 1);
     }
     // ================================================================================
     public function getHumidity($i)
     {
-        return round( $this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'], 0)
+        return round( $this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'], 0);
     }
     // ================================================================================
     public function getPPM($i)
