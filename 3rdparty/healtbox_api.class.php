@@ -4,6 +4,7 @@ class healtbox_api
 {
 
     protected $_ip;
+    protected $_profil = ["eco", "health", "intense"];
     protected $_url_data = '/v2/api/data/current';
     protected $_url_boost = '/v2/api/boost/';
     protected $_data;
@@ -76,7 +77,7 @@ class healtbox_api
     // ================================================================================
     public function getProfil($i)
     {
-        return $this->_data['room'][$i]['profile_name'];
+        return array_search($this->_data['room'][$i]['profile_name'], $this->_profil);
     }
     // ================================================================================
     public function getNbPiece()
