@@ -118,8 +118,6 @@ class healtbox extends eqLogic
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-
-      $this->setLogical($i,'device_type', 'info', '', 'string');
       $this->setLogical($i,$NamePiece . ':temperature', 'info', '°C', 'numeric');
       $this->setLogical($i,$NamePiece . ':humidity', 'info', '%', 'numeric');
       $this->setLogical($i,$NamePiece . ':debit', 'info', '%', 'numeric');
