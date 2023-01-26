@@ -15,13 +15,25 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 
-/* * ***************************Includes********************************* */
+// ================================================================================
 require_once __DIR__ . '/../../../../core/php/core.inc.php';
 require_once __DIR__ . '/../../3rdparty/healtbox_api.class.php';
 
 class healtbox extends eqLogic
 {
+  // ================================================================================
+  public static function cron()
+  {
 
+    foreach (healtbox::byType('healtbox') as $eqLogic) {
+      try {
+        $eqLogic->updatehealtbox();
+      } catch (Exception $e) {
+        log::add('healtbox', 'info', $e->getMessage());
+      }
+    }
+  }
+  // ================================================================================
   public function updatehealtbox()
   {
     $api = new healtbox_api($this->getConfiguration('ip'));
@@ -34,25 +46,27 @@ class healtbox extends eqLogic
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-
-
+      $this->checkAndUpdateCmd($NamePiece . ':temperature', $api->getTemperature($i));
+      $this->checkAndUpdateCmd($NamePiece . ':humidity', $api->getHumidity($i));
+      $this->checkAndUpdateCmd($NamePiece . ':profil', $api->getProfil($i));
+    
     }
 
 
 
     $this->refreshWidget();
   }
-  // Fonction exécutée automatiquement avant la création de l'équipement
+  // ================================================================================
   public function preInsert()
   {
   }
 
-  // Fonction exécutée automatiquement après la création de l'équipement
+  // ================================================================================
   public function postInsert()
   {
   }
 
-  // Fonction exécutée automatiquement avant la mise à jour de l'équipement
+  // ================================================================================
   public function preUpdate()
   {
     if ($this->getConfiguration('ip') == '') {
@@ -60,15 +74,17 @@ class healtbox extends eqLogic
     }
   }
 
-  // Fonction exécutée automatiquement après la mise à jour de l'équipement
+  // ================================================================================
   public function postUpdate()
   {
   }
 
-  // Fonction exécutée automatiquement avant la sauvegarde (création ou mise à jour) de l'équipement
+  // ================================================================================
   public function preSave()
   {
   }
+
+  // ================================================================================
   public function setLogical($Name, $Type, $Unit, $SubType)
   {
     $logic = $this->getCmd(null, $Name);
@@ -84,7 +100,7 @@ class healtbox extends eqLogic
     $logic->save();
   }
 
-  // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
+  // ================================================================================
   public function postSave()
   {
     $api = new healtbox_api($this->getConfiguration('ip'));
@@ -121,15 +137,14 @@ class healtbox extends eqLogic
 
 
 }
+// ================================================================================
 class healtboxCmd extends cmd
 {
-  /*     * *************************Attributs****************************** */
 
   public static $_widgetPossibility = array('custom' => false);
 
   public function execute($_options = array())
   {
-
     return false;
   }
 }
