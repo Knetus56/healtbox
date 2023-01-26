@@ -151,7 +151,7 @@ class healtbox extends eqLogic
 // ================================================================================
 class healtboxCmd extends cmd
 {
-  public static $_widgetPossibility = ['custom' => false];
+  public static $_widgetPossibility = ['custom' => true];
  
 
   public function execute($_options = array())
@@ -174,6 +174,5 @@ class healtboxCmd extends cmd
 
     }
 
-    return false;
   }
 }
