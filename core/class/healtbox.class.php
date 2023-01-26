@@ -17,6 +17,7 @@
 
 /* * ***************************Includes********************************* */
 require_once __DIR__  . '/../../../../core/php/core.inc.php';
+require_once __DIR__ . '/../../3rdparty/healtboxApi.php';
 
 class healtbox extends eqLogic {
   /*     * *************************Attributs****************************** */
@@ -97,6 +98,9 @@ class healtbox extends eqLogic {
 
   // Fonction exécutée automatiquement après la sauvegarde (création ou mise à jour) de l'équipement
   public function postSave() {
+    $api = new healtboxApi($this->getConfiguration('ip'));
+
+
   }
 
   // Fonction exécutée automatiquement avant la suppression de l'équipement
