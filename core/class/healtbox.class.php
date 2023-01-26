@@ -70,113 +70,30 @@ class healtbox extends eqLogic
   {
     $api = new healtbox_api($this->getConfiguration('ip'));
     $ap = $api->getNbPiece();
-    log::add('healtbox', 'info', $ap);
+  //   log::add('healtbox', 'info', $ap);
 
+    $this->setLogical('device_type', 'info', '', 'string');
+   
     for ($i = 1; $i <= $ap; $i++) {
 
       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
 
       $this->setLogical('device_type', 'info', '', 'string');
-
-      $air = $this->getCmd(null, $NamePiece . ':temperature');
-      if (!is_object($air)) {
-        $air = new healtboxCmd();
-      }
-      $air->setName(__($NamePiece . ':temperature', __FILE__));
-      $air->setLogicalId($NamePiece . ':temperature');
-      $air->setEqLogic_id($this->getId());
-      $air->setType('info');
-      $air->setUnite('°C');
-      $air->setSubType('numeric');
-      $air->save();
-
-      $air = $this->getCmd(null, $NamePiece . ':humidity');
-      if (!is_object($air)) {
-        $air = new healtboxCmd();
-      }
-      $air->setName(__($NamePiece . ':humidity', __FILE__));
-      $air->setLogicalId($NamePiece . ':humidity');
-      $air->setEqLogic_id($this->getId());
-      $air->setType('info');
-      $air->setUnite('%');
-      $air->setSubType('numeric');
-      $air->save();
-
-      $air = $this->getCmd(null, $NamePiece . ':debit');
-      if (!is_object($air)) {
-        $air = new healtboxCmd();
-      }
-      $air->setName(__($NamePiece . ':debit', __FILE__));
-      $air->setLogicalId($NamePiece . ':debit');
-      $air->setEqLogic_id($this->getId());
-      $air->setType('info');
-      $air->setUnite('%');
-      $air->setSubType('numeric');
-      $air->save();
-
-      $air = $this->getCmd(null, $NamePiece . ':profil');
-      if (!is_object($air)) {
-        $air = new healtboxCmd();
-      }
-      $air->setName(__($NamePiece . ':profil', __FILE__));
-      $air->setLogicalId($NamePiece . ':profil');
-      $air->setEqLogic_id($this->getId());
-      $air->setType('info');
-      $air->setUnite('');
-      $air->setSubType('string');
-      $air->save();
-
+      $this->setLogical($NamePiece . ':temperature', 'info', '°C', 'numeric');
+      $this->setLogical($NamePiece . ':humidity', 'info', '%', 'numeric');
+      $this->setLogical($NamePiece . ':debit', 'info', '%', 'numeric');
+      $this->setLogical($NamePiece . ':profil', 'info', '', 'string');
 
       $CO2 = $api->isCO2($i);
       if ($CO2) {
-        $air = $this->getCmd(null, $NamePiece . ':CO2');
-        if (!is_object($air)) {
-          $air = new healtboxCmd();
-        }
-        $air->setName(__($NamePiece . ':CO2', __FILE__));
-        $air->setLogicalId($NamePiece . ':CO2');
-        $air->setEqLogic_id($this->getId());
-        $air->setType('info');
-        $air->setUnite('ppm');
-        $air->setSubType('numeric');
-        $air->save();
-
+        $this->setLogical($NamePiece . ':CO2', 'info', 'ppm', 'numeric');
       }
 
       $COV = $api->isCOV($i);
       if ($COV) {
-        $air = $this->getCmd(null, $NamePiece . ':COV');
-        if (!is_object($air)) {
-          $air = new healtboxCmd();
-        }
-        $air->setName(__($NamePiece . ':COV', __FILE__));
-        $air->setLogicalId($NamePiece . ':COV');
-        $air->setEqLogic_id($this->getId());
-        $air->setType('info');
-        $air->setUnite('ppm');
-        $air->setSubType('numeric');
-        $air->save();
-
+        $this->setLogical($NamePiece . ':COV', 'info', 'ppm', 'numeric');
       }
-
-
-
-
-
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
   }
 
   // Fonction exécutée automatiquement avant la suppression de l'équipement
