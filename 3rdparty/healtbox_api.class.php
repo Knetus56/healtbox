@@ -11,23 +11,22 @@ class healtbox_api
 
     public function __construct($ip)
     {
-
         $this->_data = "";
         $this->_dataBoost = "";
         $this->setip($ip);
         $this->getData();
     }
-
+    // ================================================================================
     public function setip($ip)
     {
         $this->_ip = $ip;
     }
-
+    // ================================================================================
     public function getip()
     {
         return $this->_ip;
     }
-
+    // ================================================================================
     public function getData()
     {
         $session = curl_init();
@@ -42,27 +41,47 @@ class healtbox_api
         curl_close($session);
         $this->_data = json_decode($json, true);
     }
+    // ================================================================================
     public function getDevice()
     {
         return $this->_data['description'];
     }
+    // ================================================================================
+    public function getTemperature($i)
+    {
+        return $this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'];
+    }
+    // ================================================================================
+    public function getHumidity($i)
+    {
+        return $this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'];
+    }
+    // ================================================================================
+    public function getPPM($i)
+    {
+        return $this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'];
+    }
+    // ================================================================================
+    public function getProfil($i)
+    {
+        return $this->_data['room'][$i]['profile_name'];
+    }
+    // ================================================================================
     public function getNbPiece()
     {
         return count($this->_data['room']);
     }
+    // ================================================================================
     private function getNbSensor($i)
     {
         return count($this->_data['room'][$i]['sensor']);
     }
-
+    // ================================================================================
     public function getNamePiece($i)
     {
         return $this->_data['room'][$i]['name'];
     }
-    public function getTemperature($i)
-    {
-        return $this->_data['room'][$i]['name'];
-    }
+    // ================================================================================
     public function isCO2($i)
     {
         $n = $this->getNbSensor($i);
@@ -74,6 +93,7 @@ class healtbox_api
         }
         return false;
     }
+    // ================================================================================
     public function isCOV($i)
     {
         $n = $this->getNbSensor($i);
