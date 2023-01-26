@@ -123,7 +123,7 @@ class healtbox extends eqLogic
       $this->setLogical($NamePiece . ':temperature', 'info', '°C', 'numeric');
       $this->setLogical($NamePiece . ':humidity', 'info', '%', 'numeric');
       $this->setLogical($NamePiece . ':debit', 'info', '%', 'numeric');
-      $this->setLogical($NamePiece . ':profil', 'info', '', 'string');
+      $this->setLogical($NamePiece . ':profil', 'info', '', 'numeric');
 
       $CO2 = $api->isCO2($i);
       if ($CO2) {
