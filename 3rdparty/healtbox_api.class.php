@@ -63,25 +63,24 @@ class healtbox_api
     }
     public function isCO2($i)
     {
-
-        $json = $this->getNbSensor($i);
-
-
-
-
-
-        return $json;
+        $n = $this->getNbSensor($i);
+        if ($n < 4) {
+            return false;
+        }
+        if ($this->_data['room'][$i]['name']['sensor'][2]['type'] == 'indoor CO2') {
+            return true;
+        }
+        return false;
     }
     public function isCOV($i)
     {
-
-
-
-
-
-
-
-
+        $n = $this->getNbSensor($i);
+        if ($n < 4) {
+            return false;
+        }
+        if ($this->_data['room'][$i]['name']['sensor'][2]['type'] == 'indoor volatile organic compounds') {
+            return true;
+        }
         return false;
     }
 }
