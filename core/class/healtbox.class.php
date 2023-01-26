@@ -73,6 +73,80 @@ class healtbox extends eqLogic
       $air->setUnite('°C');
       $air->setSubType('numeric');
       $air->save();
+
+      $air = $this->getCmd(null, $NamePiece . ':humidity');
+      if (!is_object($air)) {
+        $air = new healtboxCmd();
+      }
+      $air->setName(__($NamePiece . ':humidity', __FILE__));
+      $air->setLogicalId($NamePiece . ':humidity');
+      $air->setEqLogic_id($this->getId());
+      $air->setType('info');
+      $air->setUnite('%');
+      $air->setSubType('numeric');
+      $air->save();
+
+      $air = $this->getCmd(null, $NamePiece . ':debit');
+      if (!is_object($air)) {
+        $air = new healtboxCmd();
+      }
+      $air->setName(__($NamePiece . ':debit', __FILE__));
+      $air->setLogicalId($NamePiece . ':debit');
+      $air->setEqLogic_id($this->getId());
+      $air->setType('info');
+      $air->setUnite('%');
+      $air->setSubType('numeric');
+      $air->save();
+
+      $air = $this->getCmd(null, $NamePiece . ':profil');
+      if (!is_object($air)) {
+        $air = new healtboxCmd();
+      }
+      $air->setName(__($NamePiece . ':profil', __FILE__));
+      $air->setLogicalId($NamePiece . ':profil');
+      $air->setEqLogic_id($this->getId());
+      $air->setType('info');
+      $air->setUnite('');
+      $air->setSubType('string');
+      $air->save();
+
+
+      $CO2 = $api->isCO2($i);
+      if ($CO2) {
+        $air = $this->getCmd(null, $NamePiece . ':CO2');
+        if (!is_object($air)) {
+          $air = new healtboxCmd();
+        }
+        $air->setName(__($NamePiece . ':CO2', __FILE__));
+        $air->setLogicalId($NamePiece . ':CO2');
+        $air->setEqLogic_id($this->getId());
+        $air->setType('info');
+        $air->setUnite('ppm');
+        $air->setSubType('numeric');
+        $air->save();
+
+      }  
+      
+      $COV = $api->isCOV($i);
+      if ($COV) {
+        $air = $this->getCmd(null, $NamePiece . ':COV');
+        if (!is_object($air)) {
+          $air = new healtboxCmd();
+        }
+        $air->setName(__($NamePiece . ':COV', __FILE__));
+        $air->setLogicalId($NamePiece . ':COV');
+        $air->setEqLogic_id($this->getId());
+        $air->setType('info');
+        $air->setUnite('ppm');
+        $air->setSubType('numeric');
+        $air->save();
+
+      }
+
+
+
+
+
     }
 
 
@@ -127,6 +201,6 @@ class healtboxCmd extends cmd
       $this->getEqLogic()->updateWeatherData();
     }
 
+    return false;
   }
-
 }
