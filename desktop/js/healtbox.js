@@ -45,16 +45,20 @@ function addCmdToTable(_cmd) {
   tr += '<option value="">{{Aucune}}</option>'
   tr += '</select>'
   tr += '</td><td>';
-  tr += '<input class="cmdAttr form-control type input-sm" data-l1key="type" value="info" disabled style="margin-bottom:5px;width:120px;" />';
+  if (init(_cmd.type) == 'action') {
+    tr += '<input class="cmdAttr form-control type input-sm" data-l1key="type" value="action" disabled style="margin-bottom:5px;width:120px;" />';
+  } else {
+    tr += '<input class="cmdAttr form-control type input-sm" data-l1key="type" value="info" disabled style="margin-bottom:5px;width:120px;" />';
+  }
   tr += '<span class="cmdAttr subType" subType="' + init(_cmd.subType) + '"></span>';
-  tr += '</td><td>';
-  if (is_numeric(_cmd.id)) {
+   tr += '</td><td>';
+  if (init(_cmd.type) == 'action') {
     tr += '<textarea class="cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="request" style="height:18px;" placeholder="{{Valeur}}"></textarea>';
     tr += '<a class="btn btn-default btn-sm cursor listEquipementInfo" data-input="request" style="margin-top:5px;"><i class="fas fa-list-alt "></i> {{Rechercher équipement}}</a>';
     tr += '</select></span>';
   }
   tr += '</td><td>';
-  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>'; 
+  tr += '<span class="cmdAttr" data-l1key="htmlstate"></span>';
   tr += '</td><td>';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="minValue" placeholder="{{Min}}" title="{{Min}}" style="width:50px;display:inline-block;">';
   tr += '<input class="tooltips cmdAttr form-control input-sm" data-l1key="configuration" data-l2key="maxValue" placeholder="{{Max}}" title="{{Max}}" style="width:50px;display:inline-block;">';
