@@ -57,6 +57,9 @@ class healthbox extends eqLogic
             if ($COV) {
                 $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
             }
+            $boost = $api->getBoost($i);
+            log::add('healthbox', 'info', $boost);
+
         }
 
         $this->refreshWidget();
@@ -141,7 +144,7 @@ class healthbox extends eqLogic
             $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
             $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
 
-            $this->setLogical($i, $NamePiece . ':boostONOFF', 'action', '', 'other');          
+            $this->setLogical($i, $NamePiece . ':boostONOFF', 'action', '', 'other');
             $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
         }
