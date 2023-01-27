@@ -170,10 +170,10 @@ class healthboxCmd extends cmd
        
         log::add('healthbox', 'info', $id );
         log::add('healthbox', 'info', $req );
+        log::add('healthbox', 'info', $request );
         if ($req == 'changeProfil') {
             
-            log::add('healthbox', 'info', $req );
-            $api->changeProfil($id, $request);
+                 $api->changeProfil($id, intval($request));
 
         }
 
