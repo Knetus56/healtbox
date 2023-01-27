@@ -180,7 +180,28 @@ class healthboxCmd extends cmd
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
                 $api->changeProfil($p[0], intval($request));
 
+            }   
+            
+            elseif ($p[2] == 'boostON') {
+
+                log::add('healthbox', 'info','boostON');
+
             }
+
+            elseif ($p[2] == 'boostOFF') {
+
+
+                log::add('healthbox', 'info','boostOFF');
+            }
+
+
+
+
+
+
+
+
+
             if ($eqLogic->getIsEnable() == 1) {
                 $eqLogic->updatehealthbox();
             }
