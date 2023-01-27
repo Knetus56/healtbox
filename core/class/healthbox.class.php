@@ -111,6 +111,12 @@ class healthbox extends eqLogic
         $logic->setSubType($SubType);
         $logic->save();
     }
+    // ================================================================================
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
 
     // ================================================================================
     public function postSave()
@@ -172,22 +178,24 @@ class healthboxCmd extends cmd
 
         $p = explode(":", $this->getLogicalId());
         $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-        
+
         if ($p[2] == 'changeProfil') {
 
             $api->changeProfil($p[0], intval($request));
 
         } elseif ($p[2] == 'boostON') {
-
-            $api->enableBoost($p[0], $request);
-
+            if ($this->isJson($request)) {
+                $api->enableBoost($p[0], $request);
+            }else{
+                message::add('healthbox', 'error', 'JSON invalide');
+            }
         } elseif ($p[2] == 'boostOFF') {
 
             $api->disableBoost($p[0]);
         }
 
         if ($eqLogic->getIsEnable() == 1) {
-            //    $eqLogic->updatehealthbox();
+            $eqLogic->updatehealthbox();
         }
 
     }
