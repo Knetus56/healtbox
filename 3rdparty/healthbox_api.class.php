@@ -35,7 +35,7 @@ class healthbox_api
         curl_setopt_array($session, [
             CURLOPT_URL => "http://" . $this->_ip . $this->_url_data,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => ["Content-Type: application/json"]
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
 
         $json = curl_exec($session);
@@ -52,8 +52,8 @@ class healthbox_api
             CURLOPT_URL => "http://" . $this->_ip . $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS => $data,
-            CURLOPT_HTTPHEADER => ["Content-Type: application/json"]
+            CURLOPT_POSTFIELDS => '"' . $data . '"',
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
 
         $response = curl_exec($curl);
@@ -140,7 +140,6 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put('/data/current/room/' + $i + '/profile_name', '"' . $this->_profil[$profil] . '"');
+        $this->put('/data/current/room/'+$i+'/profile_name', $this->_profil[$profil] );
     }
 }
-?>
