@@ -36,6 +36,7 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
+        log::add('healthbox', 'info', 'ip :  ' . $this->getConfiguration('ip'));
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -111,6 +112,8 @@ class healthbox extends eqLogic
     // ================================================================================
     public function postSave()
     {
+        
+        log::add('healthbox', 'info', 'ip :  ' . $this->getConfiguration('ip'));
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
