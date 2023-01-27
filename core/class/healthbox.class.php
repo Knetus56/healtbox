@@ -179,7 +179,7 @@ class healthboxCmd extends cmd
         $p = explode(":", $this->getLogicalId());
 
         if ($p[2] == 'changeProfil') {
-            if (is_numeric(intval($request))) {
+            if (is_numeric($request)) {
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
                 $api->changeProfil($p[0], intval($request));
             } else {
