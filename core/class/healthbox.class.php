@@ -36,7 +36,7 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-        
+
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -168,15 +168,16 @@ class healthboxCmd extends cmd
         $reqest = $this->getConfiguration("ip", "healthbox");
         $ret = $this->getConfiguration("ip", "");
         $reeeq = config::byKey('ip', '');
-        log::add('healthbox', 'info', 'reqest'. $reqest);
-        log::add('healthbox', 'info','ret'. $ret);
-        log::add('healthbox', 'info','reeeq'. $reeeq);
+        log::add('healthbox', 'info', 'reqest' . $reqest);
+        log::add('healthbox', 'info', 'ret' . $ret);
+        log::add('healthbox', 'info', 'reeeq' . $reeeq);
+
+
         if ($req == 'changeProfil') {
             $api = new healthbox_api(config::byKey('ip', 'healthbox'));
             $api->changeProfil($id, intval($request));
 
         }
 
-        return false;
     }
 }
