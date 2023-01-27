@@ -45,6 +45,9 @@ class healthbox_api
     // ================================================================================
     public function getBoost($i)
     {
+
+        log::add('healthbox', 'info', "http://" . $this->_ip . $this->_url_boost . $i);
+     
         $session = curl_init();
 
         curl_setopt_array($session, [
