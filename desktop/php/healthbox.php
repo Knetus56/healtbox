@@ -1,6 +1,6 @@
 <?php
 if (!isConnect('admin')) {
-	throw new Exception('{{401 - Accès non autorisé}}');
+    throw new Exception('{{401 - Accès non autorisé}}');
 }
 // Déclaration des variables obligatoires
 $plugin = plugin::byId('healthbox');
@@ -27,33 +27,33 @@ $eqLogics = eqLogic::byType($plugin->getId());
 		</div>
 		<legend><i class="fas fa-table"></i> {{Mes templates}}</legend>
 		<?php
-		if (count($eqLogics) == 0) {
-			echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Template trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
-		} else {
-			// Champ de recherche
-			echo '<div class="input-group" style="margin:5px;">';
-			echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">';
-			echo '<div class="input-group-btn">';
-			echo '<a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>';
-			echo '<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>';
-			echo '</div>';
-			echo '</div>';
-			// Liste des équipements du plugin
-			echo '<div class="eqLogicThumbnailContainer">';
-			foreach ($eqLogics as $eqLogic) {
-				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '">';
-				echo '<img src="' . $eqLogic->getImage() . '"/>';
-				echo '<br>';
-				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-				echo '<span class="hiddenAsCard displayTableRight hidden">';
-				echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Equipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Equipement non visible}}"></i>';
-				echo '</span>';
-				echo '</div>';
-			}
-			echo '</div>';
-		}
-		?>
+if (count($eqLogics) == 0) {
+    echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement Template trouvé, cliquer sur "Ajouter" pour commencer}}</div>';
+} else {
+    // Champ de recherche
+    echo '<div class="input-group" style="margin:5px;">';
+    echo '<input class="form-control roundedLeft" placeholder="{{Rechercher}}" id="in_searchEqlogic">';
+    echo '<div class="input-group-btn">';
+    echo '<a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i></a>';
+    echo '<a class="btn roundedRight hidden" id="bt_pluginDisplayAsTable" data-coreSupport="1" data-state="0"><i class="fas fa-grip-lines"></i></a>';
+    echo '</div>';
+    echo '</div>';
+    // Liste des équipements du plugin
+    echo '<div class="eqLogicThumbnailContainer">';
+    foreach ($eqLogics as $eqLogic) {
+        $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+        echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '">';
+        echo '<img src="' . $eqLogic->getImage() . '"/>';
+        echo '<br>';
+        echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+        echo '<span class="hiddenAsCard displayTableRight hidden">';
+        echo ($eqLogic->getIsVisible() == 1) ? '<i class="fas fa-eye" title="{{Equipement visible}}"></i>' : '<i class="fas fa-eye-slash" title="{{Equipement non visible}}"></i>';
+        echo '</span>';
+        echo '</div>';
+    }
+    echo '</div>';
+}
+?>
 	</div> <!-- /.eqLogicThumbnailDisplay -->
 
 	<!-- Page de présentation de l'équipement -->
@@ -97,12 +97,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
 										<option value="">{{Aucun}}</option>
 										<?php
-										$options = '';
-										foreach ((jeeObject::buildTree(null, false)) as $object) {
-											$options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
-										}
-										echo $options;
-										?>
+$options = '';
+foreach ((jeeObject::buildTree(null, false)) as $object) {
+    $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $object->getConfiguration('parentNumber')) . $object->getName() . '</option>';
+}
+echo $options;
+?>
 									</select>
 								</div>
 							</div>
@@ -110,12 +110,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
 								<label class="col-sm-4 control-label">{{Catégorie}}</label>
 								<div class="col-sm-6">
 									<?php
-									foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-										echo '<label class="checkbox-inline">';
-										echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" >' . $value['name'];
-										echo '</label>';
-									}
-									?>
+foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+    echo '<label class="checkbox-inline">';
+    echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" >' . $value['name'];
+    echo '</label>';
+}
+?>
 								</div>
 							</div>
 							<div class="form-group">
