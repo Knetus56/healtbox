@@ -45,6 +45,10 @@ class healthbox_api
     // ================================================================================
     public function put($url, $data)
     {
+
+        log::add('healthbox', 'info',"http://" . $this->_ip . $url);
+        log::add('healthbox', 'info',$data);
+    
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
@@ -55,7 +59,7 @@ class healthbox_api
         ]);
 
         $response = curl_exec($curl);
-
+        log::add('healthbox', 'debug',$response);
         curl_close($curl);
         return $response;
     }
