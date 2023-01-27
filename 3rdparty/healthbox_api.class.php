@@ -1,5 +1,5 @@
 <?php
-require_once __DIR__ . '/../../../../core/php/core.inc.php';
+
 class healthbox_api
 {
 
@@ -52,7 +52,7 @@ class healthbox_api
             CURLOPT_URL => "http://" . $this->_ip . $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
-            CURLOPT_POSTFIELDS =>  $data,
+            CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
 
@@ -140,7 +140,7 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        log::add('healthbox', 'info', '/data/current/room/'+$i+'/profile_name', $this->_profil[$profil] );
-        $this->put('/data/current/room/'.$i.'/profile_name', $this->_profil[$profil] );
+
+        $this->put('/data/current/room/' . $i . '/profile_name', $this->_profil[$profil]);
     }
 }
