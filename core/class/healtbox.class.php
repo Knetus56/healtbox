@@ -97,8 +97,9 @@ class healtbox extends eqLogic
     if (!is_object($logic)) {
       $logic = new healtboxCmd();
     }
-    $logic->setName(__($room  .  '_'  .  $Name, __FILE__));
-    $logic->setLogicalId( $Name .  '_'  . $i );
+    $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+    $logic->setName(__($room  .  ':'  .  $Name, __FILE__));
+    $logic->setLogicalId( $NamePiece .  '_'  . $i );
     $logic->setEqLogic_id($this->getId());
     $logic->setType($Type);
     $logic->setUnite($Unit);
@@ -117,7 +118,7 @@ class healtbox extends eqLogic
 
      for ($i = 1; $i <= $ap; $i++) {
 
-       $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+       $NamePiece = $api->getNamePiece($i);
        $this->setLogical($i, $NamePiece , 'temperature', 'info', '°C', 'numeric');
     //   $this->setLogical($i, $NamePiece . '_humidity', 'info', '%', 'numeric');
     //   $this->setLogical($i, $NamePiece . '_debit', 'info', '%', 'numeric');
