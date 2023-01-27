@@ -169,6 +169,6 @@ class healthbox_api
     }
     public function disableBoost($i)
     {
-        $this->put('/v2/api/boost/' . $i, '{"enable": "false"}');
+        $this->put('/v2/api/boost/' . $i, '{"enable": false}');
     }
 }
