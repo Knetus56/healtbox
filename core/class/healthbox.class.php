@@ -136,8 +136,12 @@ class healthbox extends eqLogic
                 $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
             }
 
-            $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-            $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':boost-status', 'info', '', 'binary');
+            $this->setLogical($i, $NamePiece . ':boost-level', 'info', '', 'numeric');
+            $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
+            $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
+
+            $this->setLogical($i, $NamePiece . ':boostONOFF', 'action', '', 'other');          
             $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
         }
