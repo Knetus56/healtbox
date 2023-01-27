@@ -58,7 +58,7 @@ class healthbox extends eqLogic
                 $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
             }
             $boost = $api->getBoost($i);
-            log::add('healthbox', 'info', $boost['level']);
+            log::add('healthbox', 'info', json_decode($boost),true);
 
         }
 
