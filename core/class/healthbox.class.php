@@ -159,28 +159,17 @@ class healthboxCmd extends cmd
         }
 
         $request = $this->getConfiguration("request", "");
-        log::add('healthbox', 'debug','request  :   ' . $request);
-        
-
         $request = jeedom::evaluateExpression($request);
-        log::add('healthbox', 'debug','requestevaluate  :   ' . $request);
 
         $r = $this->getLogicalId();
-        log::add('healthbox', 'debug','LogicalId  :   ' . $r);
-
-
         $p = explode(":", $r);
 
-        $numroom = $p[0];
-        $req = $p[2];
-
         $eqLogic = $this->getEqlogic();
+   
+        if ($p[2] == 'changeProfil') {
 
-        $request = jeedom::evaluateExpression($request);
-      
-        if ($req == 'changeProfil') {
-           // $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-          //  $api->changeProfil($numroom, intval($request));
+            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+            $api->changeProfil($p[0], intval($request));
 
         }
         if ($eqLogic->getIsEnable() == 1) {
