@@ -13,7 +13,13 @@
 * You should have received a copy of the GNU General Public License
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
-
+$("#table_cmd").delegate(".listEquipementAction", 'click', function() {
+	var el = $(this);
+	jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function(result) {
+		var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
+		calcul.value(result.human);
+	});
+});
 /* Permet la réorganisation des commandes dans l'équipement */
 $("#table_cmd").sortable({
   axis: "y",
