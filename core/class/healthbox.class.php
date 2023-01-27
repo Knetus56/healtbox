@@ -177,21 +177,25 @@ class healthboxCmd extends cmd
         $request = jeedom::evaluateExpression($this->getConfiguration("request", ""));
 
         $p = explode(":", $this->getLogicalId());
-        $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
 
         if ($p[2] == 'changeProfil') {
-
-            $api->changeProfil($p[0], intval($request));
-
+            if (is_numeric(intval($request))) {
+                $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+                $api->changeProfil($p[0], intval($request));
+            } else {
+                log::add('healthbox', 'error', 'Commande changeProfil : Donnée non numérique');
+                return false;
+            }
         } elseif ($p[2] == 'boostON') {
             if ($this->isJson($request)) {
+                $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
                 $api->enableBoost($p[0], $request);
             } else {
                 log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
                 return false;
             }
         } elseif ($p[2] == 'boostOFF') {
-
+            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
             $api->disableBoost($p[0]);
         }
 
