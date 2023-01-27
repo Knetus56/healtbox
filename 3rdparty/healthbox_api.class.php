@@ -1,5 +1,5 @@
 <?php
-
+require_once __DIR__ . '/../../../../core/php/core.inc.php';
 class healthbox_api
 {
 
@@ -140,6 +140,7 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put('/data/current/room/'+$i+'/profile_name', $this->_profil[$profil] );
+        log::add('healthbox', 'info', '/data/current/room/'+$i+'/profile_name', $this->_profil[$profil] );
+        $this->put('/data/current/room/'.$i.'/profile_name', $this->_profil[$profil] );
     }
 }
