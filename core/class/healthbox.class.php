@@ -187,7 +187,8 @@ class healthboxCmd extends cmd
             if ($eqLogic->isJson($request)) {
                 $api->enableBoost($p[0], $request);
             } else {
-                message::add('healthbox', 'error', 'JSON invalide');
+                log::add('healthbox', 'error','Commande boostON : JSON invalide');
+                return false;
             }
         } elseif ($p[2] == 'boostOFF') {
 
