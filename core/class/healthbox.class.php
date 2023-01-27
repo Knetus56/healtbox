@@ -172,6 +172,9 @@ class healthboxCmd extends cmd
             $api->changeProfil($id, intval($request));
 
         }
+        if ($eqLogic->getIsEnable() == 1) {
+            $eqLogic->updatehealthbox();
+        }
 
     }
 }
