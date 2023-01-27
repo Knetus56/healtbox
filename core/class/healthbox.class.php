@@ -184,9 +184,9 @@ class healthboxCmd extends cmd
             $api->changeProfil($p[0], intval($request));
 
         } elseif ($p[2] == 'boostON') {
-            if ($this->isJson($request)) {
+            if ($eqLogic->isJson($request)) {
                 $api->enableBoost($p[0], $request);
-            }else{
+            } else {
                 message::add('healthbox', 'error', 'JSON invalide');
             }
         } elseif ($p[2] == 'boostOFF') {
