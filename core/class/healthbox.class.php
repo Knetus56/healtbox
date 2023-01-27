@@ -166,19 +166,16 @@ class healthboxCmd extends cmd
         $id = $p[0];
         $req = $p[2];
 
+        $eqLogic = $this->getEqlogic();
+        $device_type = $eqLogic->getConfiguration('iphealthbox');
 
-        
-		$eqLogic = $this->getEqlogic();
-		$device_type = explode('::', $eqLogic->getConfiguration('iphealthbox'));
-  
-        log::add('healthbox', 'info',  $device_type);
+        log::add('healthbox', 'info', $device_type);
         $reqest = $this->getConfiguration('iphealthbox', 'healthbox');
         $ret = $this->getConfiguration('iphealthbox', 'healthbox');
         $reeeq = config::byKey('iphealthbox', 'healthbox');
         log::add('healthbox', 'info', 'reqest' . $reqest);
         log::add('healthbox', 'info', 'ret' . $ret);
         log::add('healthbox', 'info', 'reeeq' . $reeeq);
-
 
         if ($req == 'changeProfil') {
             $api = new healthbox_api(config::byKey('iphealthbox', 'healthbox'));
