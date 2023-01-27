@@ -132,7 +132,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<sup><i class="fas fa-question-circle tooltips" title="{{Renseignez l'ip de l'équipement}}"></i></sup>
 								</label>
 								<div class="col-sm-6">
-									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="ip" placeholder="{{IP}}">
+									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="iphealthbox" placeholder="{{ 192.168.1.20 }}">
 								</div>
 							</div>
 						</div>
