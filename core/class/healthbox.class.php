@@ -164,9 +164,15 @@ class healthboxCmd extends cmd
         $r = $this->getLogicalId();
 
         $p = explode(" ", $r);
+
         $id = $p[0];
         $req = $p[2];
+       
+        log::add('healthbox', 'info', $id );
+        log::add('healthbox', 'info', $req );
         if ($req == 'changeProfil') {
+            
+            log::add('healthbox', 'info', $req );
             $api->changeProfil($id, $request);
 
         }
