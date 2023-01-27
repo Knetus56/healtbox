@@ -47,8 +47,8 @@ class healthbox_api
     {
 
         $curl = curl_init();
-        log::add('healthbox', 'info', $this->_ip);
-        log::add('healthbox', 'info', $data);
+        log::add('healthbox', 'info', '_ip  :  ' . $this->_ip);
+        log::add('healthbox', 'info', 'data  :  ' . $data);
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
             CURLOPT_RETURNTRANSFER => true,
