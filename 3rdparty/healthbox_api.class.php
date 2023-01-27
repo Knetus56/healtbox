@@ -3,12 +3,12 @@
 class healthbox_api
 {
 
-    protected $_ip;
-    protected $_data;
-    protected $_dataBoost;
-    protected $_profil = ["eco", "health", "intense"];
-    protected $_url_data = '/v2/api/data/current';
-    protected $_url_boost = '/v2/api/boost/';
+    private $_ip;
+    private $_data;
+    private $_dataBoost;
+    private $_profil = ["eco", "health", "intense"];
+    private $_url_data = '/v2/api/data/current';
+    private $_url_boost = '/v2/api/boost/';
 
     public function __construct($ip)
     {
