@@ -90,17 +90,16 @@ class healtbox extends eqLogic
     }
 
     // ================================================================================
-    public function setLogical($i, $room, $Name, $Type, $Unit, $SubType)
+    public function setLogical($i, $room, $Type, $Unit, $SubType)
     {
 
-        $NamePiece = str_replace(" ", "_", $room);
-        $NamePiece = $i . ':' . $room;
-
+        $NamePiece = str_replace(" ", "_",$i . ':' . $room);
+        
         $logic = $this->getCmd(null, $NamePiece);
         if (!is_object($logic)) {
             $logic = new healtboxCmd();
         }
-        $logic->setName(__($room . ':' . $Name, __FILE__));
+        $logic->setName(__($room . ':' . $room, __FILE__));
         $logic->setLogicalId($NamePiece);
         $logic->setEqLogic_id($this->getId());
         $logic->setType($Type);
@@ -116,13 +115,13 @@ class healtbox extends eqLogic
         $ap = $api->getNbPiece();
         //   log::add('healtbox', 'info', $ap);
 
-        $this->setLogical(0, 'device_type', 'config', 'info', '', 'string');
+        $this->setLogical(0, 'device_type', 'info', '', 'string');
 
         for ($i = 1; $i <= $ap; $i++) {
 
             $NamePiece = $api->getNamePiece($i);
-            $this->setLogical($i, $NamePiece, 'temperature', 'info', '°C', 'numeric');
-            //   $this->setLogical($i, $NamePiece . '_humidity', 'info', '%', 'numeric');
+            $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
+            $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
             //   $this->setLogical($i, $NamePiece . '_debit', 'info', '%', 'numeric');
             //   $this->setLogical($i, $NamePiece . '_profil', 'info', '', 'numeric');
 
