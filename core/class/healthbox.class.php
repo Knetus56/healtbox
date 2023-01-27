@@ -112,13 +112,6 @@ class healthbox extends eqLogic
         $logic->save();
     }
     // ================================================================================
-    private function isJson($string)
-    {
-        json_decode($string);
-        return json_last_error() === JSON_ERROR_NONE;
-    }
-
-    // ================================================================================
     public function postSave()
     {
 
@@ -166,6 +159,13 @@ class healthbox extends eqLogic
 // ================================================================================
 class healthboxCmd extends cmd
 {
+    // ================================================================================
+    private function isJson($string)
+    {
+        json_decode($string);
+        return json_last_error() === JSON_ERROR_NONE;
+    }
+    // ================================================================================
     public function execute($_options = array())
     {
 
@@ -184,10 +184,10 @@ class healthboxCmd extends cmd
             $api->changeProfil($p[0], intval($request));
 
         } elseif ($p[2] == 'boostON') {
-            if ($eqLogic->isJson($request)) {
+            if ($this->isJson($request)) {
                 $api->enableBoost($p[0], $request);
             } else {
-                log::add('healthbox', 'error','Commande boostON : JSON invalide');
+                log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
                 return false;
             }
         } elseif ($p[2] == 'boostOFF') {
