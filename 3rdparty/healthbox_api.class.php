@@ -4,17 +4,17 @@ class healthbox_api
 {
 
     protected $_ip;
+    protected $_data;
+    protected $_dataBoost;
     protected $_profil = ["eco", "health", "intense"];
     protected $_url_data = '/v2/api/data/current';
     protected $_url_boost = '/v2/api/boost/';
-    protected $_data;
-    protected $_dataBoost;
 
     public function __construct($ip)
     {
+        $this->setip($ip);
         $this->_data = "";
         $this->_dataBoost = "";
-        $this->setip($ip);
         $this->getData();
     }
     // ================================================================================
@@ -45,10 +45,10 @@ class healthbox_api
     // ================================================================================
     public function put($url, $data)
     {
-
-        $curl = curl_init();
         log::add('healthbox', 'info', '_ip  :  ' . $this->_ip);
         log::add('healthbox', 'info', 'data  :  ' . $data);
+
+        $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
             CURLOPT_RETURNTRANSFER => true,
@@ -141,7 +141,6 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-
         $this->put('/data/current/room/' . $i . '/profile_name', $this->_profil[$profil]);
     }
 }
