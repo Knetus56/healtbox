@@ -113,7 +113,6 @@ class healthbox extends eqLogic
     public function postSave()
     {
 
-        log::add('healthbox', 'info', 'ip postSave:  ' . $this->getConfiguration('ip'));
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -153,8 +152,6 @@ class healthbox extends eqLogic
 // ================================================================================
 class healthboxCmd extends cmd
 {
-    public static $_widgetPossibility = ['custom' => false];
-
     public function execute($_options = array())
     {
 
