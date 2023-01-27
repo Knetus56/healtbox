@@ -112,7 +112,7 @@ class healthbox extends eqLogic
     // ================================================================================
     public function postSave()
     {
-        
+
         log::add('healthbox', 'info', 'ip postSave:  ' . $this->getConfiguration('ip'));
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
@@ -170,11 +170,8 @@ class healthboxCmd extends cmd
         $id = $p[0];
         $req = $p[2];
 
-    
-  
-
         if ($req == 'changeProfil') {
-            $api = new healthbox_api(config::byKey('ip','healthbox'));
+            $api = new healthbox_api(config::byKey('ip', 'healthbox'));
             $api->changeProfil($id, intval($request));
 
         }
