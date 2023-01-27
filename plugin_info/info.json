@@ -1,6 +1,6 @@
 {
-	"id" : "healtbox",
-	"name" : "healtbox",
+	"id" : "healthbox",
+	"name" : "healthbox",
 	"specialAttributes" : {
 		"object" : {
 			"toto" : {"name" : {"fr_FR" : "Plop je suis un attribut spécial"},"type" : "input"},

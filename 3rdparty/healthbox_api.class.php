@@ -1,6 +1,6 @@
 <?php
 
-class healtbox_api
+class healthbox_api
 {
 
     protected $_ip;

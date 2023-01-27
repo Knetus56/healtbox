@@ -18,13 +18,13 @@
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
 // Fonction exécutée automatiquement après l'installation du plugin
-function healtbox_install() {
+function healthbox_install() {
 }
 
 // Fonction exécutée automatiquement après la mise à jour du plugin
-function healtbox_update() {
+function healthbox_update() {
 }
 
 // Fonction exécutée automatiquement après la suppression du plugin
-function healtbox_remove() {
+function healthbox_remove() {
 }

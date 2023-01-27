@@ -17,28 +17,28 @@
 
 // ================================================================================
 require_once __DIR__ . '/../../../../core/php/core.inc.php';
-require_once __DIR__ . '/../../3rdparty/healtbox_api.class.php';
+require_once __DIR__ . '/../../3rdparty/healthbox_api.class.php';
 
-class healtbox extends eqLogic
+class healthbox extends eqLogic
 {
     // ================================================================================
     public static function cron()
     {
 
-        foreach (healtbox::byType('healtbox') as $eqLogic) {
+        foreach (healthbox::byType('healthbox') as $eqLogic) {
             try {
-                $eqLogic->updatehealtbox();
+                $eqLogic->updatehealthbox();
             } catch (Exception $e) {
-                log::add('healtbox', 'info', $e->getMessage());
+                log::add('healthbox', 'info', $e->getMessage());
             }
         }
     }
     // ================================================================================
-    public function updatehealtbox()
+    public function updatehealthbox()
     {
-        $api = new healtbox_api($this->getConfiguration('ip'));
+        $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
-        //   log::add('healtbox', 'info', $ap);
+        //   log::add('healthbox', 'info', $ap);
 
         $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
 
@@ -97,7 +97,7 @@ class healtbox extends eqLogic
         
         $logic = $this->getCmd(null, $NamePiece);
         if (!is_object($logic)) {
-            $logic = new healtboxCmd();
+            $logic = new healthboxCmd();
         }
         $logic->setName(__($room, __FILE__));
         $logic->setLogicalId($NamePiece);
@@ -111,9 +111,9 @@ class healtbox extends eqLogic
     // ================================================================================
     public function postSave()
     {
-        $api = new healtbox_api($this->getConfiguration('ip'));
+        $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
-        //   log::add('healtbox', 'info', $ap);
+        //   log::add('healthbox', 'info', $ap);
 
         $this->setLogical(0, 'device_type', 'info', '', 'string');
 
@@ -142,13 +142,13 @@ class healtbox extends eqLogic
         }
 
         if ($this->getIsEnable() == 1) {
-            $this->updatehealtbox();
+            $this->updatehealthbox();
         }
     }
 
 }
 // ================================================================================
-class healtboxCmd extends cmd
+class healthboxCmd extends cmd
 {
     public static $_widgetPossibility = ['custom' => false];
 
@@ -159,7 +159,7 @@ class healtboxCmd extends cmd
             return;
         }
 
-        $api = new healtbox_api($this->getConfiguration('ip'));
+        $api = new healthbox_api($this->getConfiguration('ip'));
         $request = $this->getConfiguration("request", "");
         $r = $this->getLogicalId();
 
