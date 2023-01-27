@@ -36,7 +36,7 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-        log::add('healthbox', 'info', 'ip updatehealthbox:  ' . $this->getConfiguration('ip'));
+        
         $api = new healthbox_api($this->getConfiguration('ip'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -44,7 +44,6 @@ class healthbox extends eqLogic
         $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
 
         for ($i = 1; $i <= $ap; $i++) {
-
             $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':temperature', $api->getTemperature($i));
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':humidity', $api->getHumidity($i));
@@ -166,8 +165,12 @@ class healthboxCmd extends cmd
 
         $id = $p[0];
         $req = $p[2];
-        $reeeq = config::byKey('ip', 'healthbox');
-        log::add('healthbox', 'info','healthbox   :::   ' .  $reeeq);
+        $reqest = $this->getConfiguration("ip", "healthbox");
+        $ret = $this->getConfiguration("ip", "");
+        $reeeq = config::byKey('ip', '');
+        log::add('healthbox', 'info',$reqest);
+        log::add('healthbox', 'info',$ret);
+        log::add('healthbox', 'info',$reeeq);
         if ($req == 'changeProfil') {
             $api = new healthbox_api(config::byKey('ip', 'healthbox'));
             $api->changeProfil($id, intval($request));
