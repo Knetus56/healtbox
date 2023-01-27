@@ -167,10 +167,8 @@ class healthboxCmd extends cmd
         $req = $p[2];
 
         $eqLogic = $this->getEqlogic();
-        $device_type = $eqLogic->getConfiguration('iphealthbox');
-
         if ($req == 'changeProfil') {
-            $api = new healthbox_api($device_type);
+            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
             $api->changeProfil($id, intval($request));
 
         }
