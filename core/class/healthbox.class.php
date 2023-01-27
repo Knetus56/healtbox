@@ -159,17 +159,21 @@ class healthboxCmd extends cmd
         }
 
         $request = $this->getConfiguration("request", "");
+        log::add('healthbox', 'debug','request  :   ' . $request);
         $r = $this->getLogicalId();
+        log::add('healthbox', 'debug','LogicalId  :   ' . $r);
+
 
         $p = explode(":", $r);
 
-        $id = $p[0];
+        $numroom = $p[0];
         $req = $p[2];
 
         $eqLogic = $this->getEqlogic();
+      
         if ($req == 'changeProfil') {
-            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-            $api->changeProfil($id, intval($request));
+           // $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+          //  $api->changeProfil($numroom, intval($request));
 
         }
         if ($eqLogic->getIsEnable() == 1) {
