@@ -57,8 +57,7 @@ class healthbox extends eqLogic
             if ($COV) {
                 $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
             }
-            $boost = $api->getBoost($i);
-           
+            $boost = $api->getBoost($i);           
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
@@ -146,8 +145,9 @@ class healthbox extends eqLogic
             $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
             $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
 
-            $this->setLogical($i, $NamePiece . ':boostONOFF', 'action', '', 'other');
             $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
 
         }
 
