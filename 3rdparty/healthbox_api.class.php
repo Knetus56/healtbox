@@ -46,7 +46,6 @@ class healthbox_api
     public function put($url, $data)
     {
         log::add('healthbox', 'info', '_ip  :  ' . $this->_ip);
- 
 
         $curl = curl_init();
         curl_setopt_array($curl, [
