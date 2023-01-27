@@ -163,7 +163,7 @@ class healthboxCmd extends cmd
         $request = $this->getConfiguration("request", "");
         $r = $this->getLogicalId();
 
-        $p = explode(" ", $r);
+        $p = explode(":", $r);
 
         $id = $p[0];
         $req = $p[2];
