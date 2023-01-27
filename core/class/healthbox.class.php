@@ -165,9 +165,9 @@ class healthboxCmd extends cmd
 
         $id = $p[0];
         $req = $p[2];
-        $reqest = $this->getConfiguration("ip", "healthbox");
-        $ret = $this->getConfiguration("ip", "");
-        $reeeq = config::byKey('ip', '');
+        $reqest = $this->getConfiguration('ip', 'healthbox');
+        $ret = $this->getConfiguration('ip', 'healthbox');
+        $reeeq = config::byKeys('ip', 'healthbox');
         log::add('healthbox', 'info', 'reqest' . $reqest);
         log::add('healthbox', 'info', 'ret' . $ret);
         log::add('healthbox', 'info', 'reeeq' . $reeeq);
