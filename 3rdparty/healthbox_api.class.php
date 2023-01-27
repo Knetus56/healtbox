@@ -45,8 +45,6 @@ class healthbox_api
     // ================================================================================
     public function put($url, $data)
     {
-        log::add('healthbox', 'info', '_ip  :  ' . $this->_ip);
-
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
@@ -140,6 +138,6 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put('/data/current/room/' . $i . '/profile_name', $this->_profil[$profil]);
+        $this->put('/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
     }
 }
