@@ -37,7 +37,7 @@ class healthbox extends eqLogic
     public function updatehealthbox()
     {
 
-        $api = new healthbox_api($this->getConfiguration('ip'));
+        $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
 
@@ -74,7 +74,7 @@ class healthbox extends eqLogic
     // ================================================================================
     public function preUpdate()
     {
-        if ($this->getConfiguration('ip') == '') {
+        if ($this->getConfiguration('iphealthbox') == '') {
             throw new Exception(__('Veuillez entrer une IP', __FILE__));
         }
     }
@@ -112,7 +112,7 @@ class healthbox extends eqLogic
     public function postSave()
     {
 
-        $api = new healthbox_api($this->getConfiguration('ip'));
+        $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
 
@@ -165,16 +165,16 @@ class healthboxCmd extends cmd
 
         $id = $p[0];
         $req = $p[2];
-        $reqest = $this->getConfiguration('ip', 'healthbox');
-        $ret = $this->getConfiguration('ip', 'healthbox');
-        $reeeq = config::byKeys('ip', 'healthbox');
+        $reqest = $this->getConfiguration('iphealthbox', 'healthbox');
+        $ret = $this->getConfiguration('iphealthbox', 'healthbox');
+        $reeeq = config::byKey('iphealthbox', 'healthbox');
         log::add('healthbox', 'info', 'reqest' . $reqest);
         log::add('healthbox', 'info', 'ret' . $ret);
         log::add('healthbox', 'info', 'reeeq' . $reeeq);
 
 
         if ($req == 'changeProfil') {
-            $api = new healthbox_api(config::byKey('ip', 'healthbox'));
+            $api = new healthbox_api(config::byKey('iphealthbox', 'healthbox'));
             $api->changeProfil($id, intval($request));
 
         }
