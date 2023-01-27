@@ -58,10 +58,12 @@ class healthbox extends eqLogic
                 $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
             }
             $boost = $api->getBoost($i);
-            log::add('healthbox', 'info', json_decode($boost),false);
-
+           
+            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
+            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
+            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
+            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-timeout', $boost['timeout']);
         }
-
         $this->refreshWidget();
     }
     // ================================================================================
@@ -139,7 +141,7 @@ class healthbox extends eqLogic
                 $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
             }
 
-            $this->setLogical($i, $NamePiece . ':boost-status', 'info', '', 'binary');
+            $this->setLogical($i, $NamePiece . ':boost-enable', 'info', '', 'binary');
             $this->setLogical($i, $NamePiece . ':boost-level', 'info', '', 'numeric');
             $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
             $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
