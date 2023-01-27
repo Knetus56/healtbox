@@ -141,7 +141,7 @@ class healthbox_api
     }
     // ================================================================================
     public function changeProfil($i, $profil)
-    {
-        $this->put('/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
+    {         
+        $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
     }
 }
