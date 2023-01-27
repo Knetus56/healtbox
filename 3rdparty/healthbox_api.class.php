@@ -43,12 +43,27 @@ class healthbox_api
         $this->_data = json_decode($json, true);
     }
     // ================================================================================
+    public function getBoost($i)
+    {
+        $session = curl_init();
+
+        curl_setopt_array($session, [
+            CURLOPT_URL => "http://" . $this->_ip . $this->_url_boost . $i,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
+        ]);
+
+        $json = curl_exec($session);
+        curl_close($session);
+        return json_decode($json, true);
+    }
+    // ================================================================================
     public function put($url, $data)
     {
 
-        log::add('healthbox', 'info',"http://" . $this->_ip . $url);
-        log::add('healthbox', 'info',$data);
-    
+        log::add('healthbox', 'info', "http://" . $this->_ip . $url);
+        log::add('healthbox', 'info', $data);
+
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
@@ -59,7 +74,7 @@ class healthbox_api
         ]);
 
         $response = curl_exec($curl);
-        log::add('healthbox', 'debug',$response);
+        log::add('healthbox', 'debug', $response);
         curl_close($curl);
         return $response;
     }
@@ -141,7 +156,7 @@ class healthbox_api
     }
     // ================================================================================
     public function changeProfil($i, $profil)
-    {         
+    {
         $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
     }
 }
