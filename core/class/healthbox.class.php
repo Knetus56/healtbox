@@ -93,8 +93,8 @@ class healthbox extends eqLogic
     public function setLogical($i, $room, $Type, $Unit, $SubType)
     {
 
-        $NamePiece = str_replace(" ", "_",$i . ':' . $room);
-        
+        $NamePiece = str_replace(" ", "_", $i . ':' . $room);
+
         $logic = $this->getCmd(null, $NamePiece);
         if (!is_object($logic)) {
             $logic = new healthboxCmd();
@@ -125,19 +125,19 @@ class healthbox extends eqLogic
             $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
             $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
 
-              $CO2 = $api->isCO2($i);
-              if ($CO2) {
+            $CO2 = $api->isCO2($i);
+            if ($CO2) {
                 $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
-              }
+            }
 
-              $COV = $api->isCOV($i);
-              if ($COV) {
+            $COV = $api->isCOV($i);
+            if ($COV) {
                 $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
-              }
+            }
 
-              $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-              $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
-              $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
+            $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
 
         }
 
@@ -159,7 +159,6 @@ class healthboxCmd extends cmd
             return;
         }
 
-  
         $request = $this->getConfiguration("request", "");
         $r = $this->getLogicalId();
 
@@ -167,13 +166,13 @@ class healthboxCmd extends cmd
 
         $id = $p[0];
         $req = $p[2];
-       
-        log::add('healthbox', 'info','ip :  ' $this->getConfiguration('ip') );
-        log::add('healthbox', 'info','ip :  ' $req );
-     
+
+        log::add('healthbox', 'info', 'ip :  ' . $this->getConfiguration('ip'));
+        log::add('healthbox', 'info', 'ip :  ' . $req);
+
         if ($req == 'changeProfil') {
-                 $api = new healthbox_api($this->getConfiguration('ip'));
-                 $api->changeProfil($id, intval($request));
+            $api = new healthbox_api($this->getConfiguration('ip'));
+            $api->changeProfil($id, intval($request));
 
         }
 
