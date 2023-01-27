@@ -165,6 +165,13 @@ class healthboxCmd extends cmd
 
         $id = $p[0];
         $req = $p[2];
+
+
+        
+		$eqLogic = $this->getEqlogic();
+		$device_type = explode('::', $eqLogic->getConfiguration('iphealthbox'));
+  
+        log::add('healthbox', 'info', 'device_type    ' . $device_type);
         $reqest = $this->getConfiguration('iphealthbox', 'healthbox');
         $ret = $this->getConfiguration('iphealthbox', 'healthbox');
         $reeeq = config::byKey('iphealthbox', 'healthbox');
