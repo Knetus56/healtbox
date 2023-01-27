@@ -159,7 +159,7 @@ class healthboxCmd extends cmd
             return;
         }
 
-        $api = new healthbox_api($this->getConfiguration('ip'));
+  
         $request = $this->getConfiguration("request", "");
         $r = $this->getLogicalId();
 
@@ -172,7 +172,7 @@ class healthboxCmd extends cmd
         log::add('healthbox', 'info', $req );
         log::add('healthbox', 'info', $request );
         if ($req == 'changeProfil') {
-            
+                 $api = new healthbox_api($this->getConfiguration('ip'));
                  $api->changeProfil($id, intval($request));
 
         }
