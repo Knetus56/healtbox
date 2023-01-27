@@ -167,28 +167,23 @@ class healthboxCmd extends cmd
             return;
         }
 
-        $request = $this->getConfiguration("request", "");
-
-        $request = jeedom::evaluateExpression($request);
-
-        log::add('healthbox', 'info', $request);
+        $eqLogic = $this->getEqlogic();
+        $request = jeedom::evaluateExpression($this->getConfiguration("request", ""));
 
         $p = explode(":", $this->getLogicalId());
-
-        $eqLogic = $this->getEqlogic();
-
+        $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+        
         if ($p[2] == 'changeProfil') {
 
-            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
             $api->changeProfil($p[0], intval($request));
 
         } elseif ($p[2] == 'boostON') {
 
-            log::add('healthbox', 'info', 'boostON');
+            $api->enableBoost($p[0], $request);
 
         } elseif ($p[2] == 'boostOFF') {
 
-            log::add('healthbox', 'info', 'boostOFF');
+            $api->disableBoost($p[0]);
         }
 
         if ($eqLogic->getIsEnable() == 1) {
