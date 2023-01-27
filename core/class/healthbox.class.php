@@ -57,7 +57,7 @@ class healthbox extends eqLogic
             if ($COV) {
                 $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
             }
-            $boost = $api->getBoost($i);           
+            $boost = $api->getBoost($i);
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
             $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
@@ -168,45 +168,32 @@ class healthboxCmd extends cmd
         }
 
         $request = $this->getConfiguration("request", "");
-   
-            $request = jeedom::evaluateExpression($request);
-        
-            log::add('healthbox', 'info',$request);
-        
-            $p = explode(":", $this->getLogicalId());
 
-            $eqLogic = $this->getEqlogic();
+        $request = jeedom::evaluateExpression($request);
 
-            if ($p[2] == 'changeProfil') {
+        log::add('healthbox', 'info', $request);
 
-                $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-                $api->changeProfil($p[0], intval($request));
+        $p = explode(":", $this->getLogicalId());
 
-            }   
-            
-            elseif ($p[2] == 'boostON') {
+        $eqLogic = $this->getEqlogic();
 
-                log::add('healthbox', 'info','boostON');
+        if ($p[2] == 'changeProfil') {
 
-            }
+            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+            $api->changeProfil($p[0], intval($request));
 
-            elseif ($p[2] == 'boostOFF') {
+        } elseif ($p[2] == 'boostON') {
 
+            log::add('healthbox', 'info', 'boostON');
 
-                log::add('healthbox', 'info','boostOFF');
-            }
+        } elseif ($p[2] == 'boostOFF') {
 
+            log::add('healthbox', 'info', 'boostOFF');
+        }
 
-
-
-
-
-
-
-
-            if ($eqLogic->getIsEnable() == 1) {
+        if ($eqLogic->getIsEnable() == 1) {
             //    $eqLogic->updatehealthbox();
-            }
-      
+        }
+
     }
 }
