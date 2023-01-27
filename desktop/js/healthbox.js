@@ -13,6 +13,11 @@
 * You should have received a copy of the GNU General Public License
 * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
 */
+
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
+// Modals associated to buttons "Rechercher équipement" for Action and Info Cmd
+//
 $("#table_cmd").delegate(".listEquipementAction", 'click', function() {
 	var el = $(this);
 	jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function(result) {
@@ -20,6 +25,17 @@ $("#table_cmd").delegate(".listEquipementAction", 'click', function() {
 		calcul.value(result.human);
 	});
 });
+
+$("#table_cmd").delegate(".listEquipementInfo", 'click', function () {
+	var el = $(this);
+	jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
+		var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.data('input') + ']');
+		calcul.atCaret('insert', result.human);
+		jeeFrontEnd.modifyWithoutSave = true
+	});
+});
+
+///////////////////////////////////////////////////////////////////////////////////////////////////
 /* Permet la réorganisation des commandes dans l'équipement */
 $("#table_cmd").sortable({
   axis: "y",
