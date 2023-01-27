@@ -168,7 +168,7 @@ class healthboxCmd extends cmd
         }
 
         $request = $this->getConfiguration("request", "");
-        if ($request == '') {
+   
             $request = jeedom::evaluateExpression($request);
         
             log::add('healthbox', 'info',$request);
@@ -207,6 +207,6 @@ class healthboxCmd extends cmd
             if ($eqLogic->getIsEnable() == 1) {
             //    $eqLogic->updatehealthbox();
             }
-        }
+      
     }
 }
