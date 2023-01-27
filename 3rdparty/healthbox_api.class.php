@@ -47,7 +47,7 @@ class healthbox_api
     {
 
         log::add('healthbox', 'info', "http://" . $this->_ip . $this->_url_boost . $i);
-     
+
         $session = curl_init();
 
         curl_setopt_array($session, [
@@ -161,5 +161,14 @@ class healthbox_api
     public function changeProfil($i, $profil)
     {
         $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
+    }
+    // ================================================================================
+    public function enableBoost($i, $j)
+    {
+        $this->put('/v2/api/boost/' . $i, $j);
+    }
+    public function disableBoost($i)
+    {
+        $this->put('/v2/api/boost/' . $i, '{"enable": "false"}');
     }
 }
