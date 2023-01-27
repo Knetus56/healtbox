@@ -170,7 +170,7 @@ class healthboxCmd extends cmd
         $id = $p[0];
         $req = $p[2];
 
-        log::add('healthbox', 'info', 'ip healthboxCmd:  ' . ($this->getConfiguration('ip')));
+        log::add('healthbox', 'info', 'ip healthboxCmd:  ' . (config::byKey('api','healthbox')));
   
 
         if ($req == 'changeProfil') {
