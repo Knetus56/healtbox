@@ -40,7 +40,7 @@ class healthbox extends eqLogic
         $sensorapi = new sensor_api($api->getData());
 
         $request = eqLogic::byType("info");
-        log::add('healthbox', 'debug', implode($request));
+        log::add('healthbox', 'error', implode($request));
 
         // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
