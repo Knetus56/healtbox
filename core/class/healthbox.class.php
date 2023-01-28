@@ -42,15 +42,15 @@ class healthbox extends eqLogic
         $this->checkAndUpdateCmd('0:device_type', $data['description']);
 
         foreach ($data['room'] as $i => $room) {
-            $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($i));
-            $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($i));
+            $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($room));
+            $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($room));
 
             foreach ($room['sensor'] as $ii => $sensor) {
 
-                $type = $this->checkType($sensor['type']);
+                $type = $api->checkType($sensor['type']);
 
                 if (is_array($type)) {
-                    $this->checkAndUpdateCmd($i . ':' . $type[0], $sensor['parameter'][$type[0]]['value']);
+                    $this->checkAndUpdateCmd($i . ':' . $type[0], $api->getSensor($room, $type[3]));
                 }
 
                 $boost = $api->getBoost($i);
@@ -105,24 +105,6 @@ class healthbox extends eqLogic
             throw new Exception(__('Veuillez entrer une IP', __FILE__));
         }
     }
-
-    // ================================================================================
-    private function checkType($type)
-    {
-        if ($type == "indoor relative humidity") {
-            return ['humidity', '%'];
-        } elseif ($type == "indoor temperature") {
-            return ['temperature', '°C'];
-        } elseif ($type == "indoor air quality index") {
-            return false; //['index', ''];
-        } elseif ($type == "indoor CO2") {
-            return ["CO2", 'ppm'];
-        } elseif ($type == "indoor volatile organic compounds") {
-            return ["COV", 'ppm'];
-        } else {
-            return false;
-        }
-    }
     // ================================================================================
     public function setLogical($i, $room, $name, $Type, $Unit, $SubType)
     {
@@ -160,7 +142,7 @@ class healthbox extends eqLogic
 
             foreach ($room['sensor'] as $sensor) {
 
-                $type = $this->checkType($sensor['type']);
+                $type =$api->checkType($sensor['type']);
 
                 if (is_array($type)) {
                     $this->setLogical($i, $room_name, $type[0], 'info', $type[1], 'numeric');
