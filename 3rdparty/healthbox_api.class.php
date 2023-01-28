@@ -4,8 +4,6 @@ class healthbox_api
 {
 
     private $_ip;
-    private $_data;
-    private $_dataBoost;
     private const PROFIL = ["eco", "health", "intense"];
     private const URL_DATA = '/v2/api/data/current';
     private const URL_BOOST = '/v2/api/boost/';
@@ -72,80 +70,38 @@ class healthbox_api
         return $response;
     }
     // ================================================================================
-    public function getDevice()
+    public function checkType($type)
     {
-        return $this->_data['description'];
+        if ($type == "indoor relative humidity") {
+            return ['humidity', '%', 'humidity'];
+        } elseif ($type == "indoor temperature") {
+            return ['temperature', '°C', 'temperature'];
+        } elseif ($type == "indoor air quality index") {
+            return false; //['index', '','index'];
+        } elseif ($type == "indoor CO2") {
+            return ["CO2", 'ppm', 'concentration'];
+        } elseif ($type == "indoor volatile organic compounds") {
+            return ["COV", 'ppm', 'concentration'];
+        } else {
+            return false;
+        }
     }
     // ================================================================================
-    public function getTemperature($i)
+    public function getDebit($json)
     {
-        return round($this->_data['room'][$i]['sensor'][0]['parameter']['temperature']['value'], 1);
-    }
-    // ================================================================================
-    public function getHumidity($i)
-    {
-        return round($this->_data['room'][$i]['sensor'][1]['parameter']['humidity']['value'], 0);
-    }
-    // ================================================================================
-    public function getDebit($i)
-    {
-        $nominal = $this->_data['room'][$i]['parameter']['nominal']['value'];
-        $flow_rate = $this->_data['room'][$i]['actuator'][0]['parameter']['flow_rate']['value'];
+        $nominal = $json['parameter']['nominal']['value'];
+        $flow_rate = $json['actuator'][0]['parameter']['flow_rate']['value'];
         return round(($flow_rate * 100) / $nominal, 0);
     }
     // ================================================================================
-    public function getCO2($i)
+    public function getProfil($json)
     {
-        return round($this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'], 0);
+        return array_search($json['parameter']['profile_name'], self::PROFIL);
     }
     // ================================================================================
-    public function getCOV($i)
+    public function getSensor($json, $param)
     {
-        return round($this->_data['room'][$i]['sensor'][2]['parameter']['concentration']['value'], 0);
-    }
-    // ================================================================================
-    public function getProfil($i)
-    {
-        return array_search($this->_data['room'][$i]['profile_name'], self::PROFIL);
-    }
-    // ================================================================================
-    public function getNbPiece()
-    {
-        return count($this->_data['room']);
-    }
-    // ================================================================================
-    private function getNbSensor($i)
-    {
-        return count($this->_data['room'][$i]['sensor']);
-    }
-    // ================================================================================
-    public function getNamePiece($i)
-    {
-        return $this->_data['room'][$i]['name'];
-    }
-    // ================================================================================
-    public function isCO2($i)
-    {
-        $n = $this->getNbSensor($i);
-        if ($n < 4) {
-            return false;
-        }
-        if ($this->_data['room'][$i]['sensor'][2]['type'] == 'indoor CO2') {
-            return true;
-        }
-        return false;
-    }
-    // ================================================================================
-    public function isCOV($i)
-    {
-        $n = $this->getNbSensor($i);
-        if ($n < 4) {
-            return false;
-        }
-        if ($this->_data['room'][$i]['sensor'][2]['type'] == 'indoor volatile organic compounds') {
-            return true;
-        }
-        return false;
+        return $json['parameter'][$param]['value'];
     }
     // ================================================================================
     public function changeProfil($i, $profil)
@@ -157,6 +113,7 @@ class healthbox_api
     {
         $this->put(self::URL_BOOST . $i, $j);
     }
+    // ================================================================================
     public function disableBoost($i)
     {
         $this->put(self::URL_BOOST . $i, '{"enable": false}');
