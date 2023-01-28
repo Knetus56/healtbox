@@ -95,7 +95,7 @@ class healthbox extends eqLogic
         } elseif ($type == "indoor volatile organic compounds") {
             return ["COV", 'ppm'];
         } else {
-            return 'error';
+            return false;
         }
     }
     // ================================================================================
@@ -138,8 +138,17 @@ class healthbox extends eqLogic
                 if (is_array($type)) {
                     $name_eq = $i . ':' . $room_name . ':' . $ii . ':' . $type[0];
                     $name = $room_name . ':' . $type[0];
-                    $this->setLogical( $name_eq, $name, 'info', $type[1], 'numeric');
+                    $this->setLogical($name_eq, $name, 'info', $type[1], 'numeric');
                 }
+
+                $this->setLogical($i . ':boost-enable', $room_name . ':boost-enable', 'info', '', 'binary');
+                $this->setLogical($i . ':boost-level', $room_name . ':boost-level', 'info', '', 'numeric');
+                $this->setLogical($i . ':boost-remaining', $room_name . ':boost-remaining', 'info', '', 'numeric');
+                $this->setLogical($i . ':boost-timeout', $room_name . ':boost-timeout', 'info', '', 'numeric');
+
+                $this->setLogical($i . ':changeProfil', $room_name . ':changeProfil', 'action', '', 'other');
+                $this->setLogical($i . ':boostON', $room_name . ':boostON', 'action', '', 'other');
+                $this->setLogical($i . ':boostOFF', $room_name . ':boostOFF', 'action', '', 'other');
             }
 
         }
@@ -155,30 +164,10 @@ class healthbox extends eqLogic
 
         // for ($i = 1; $i <= $ap; $i++) {
 
-        //     $NamePiece = $api->getNamePiece($i);
-        //     $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
-        //     $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
+
         //     $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
         //     $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
 
-        //     $CO2 = $api->isCO2($i);
-        //     if ($CO2) {
-        //         $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
-        //     }
-
-        //     $COV = $api->isCOV($i);
-        //     if ($COV) {
-        //         $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
-        //     }
-
-        //     $this->setLogical($i, $NamePiece . ':boost-enable', 'info', '', 'binary');
-        //     $this->setLogical($i, $NamePiece . ':boost-level', 'info', '', 'numeric');
-        //     $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
-        //     $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
-
-        //     $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
-        //     $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-        //     $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
         // }
 
         // if ($this->getIsEnable() == 1) {
