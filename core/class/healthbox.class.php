@@ -141,7 +141,7 @@ class healthboxCmd extends cmd
     // ===============================================================================
     public function dontRemoveCmd()
     {
-        //   return true;
+        return true;
     }
     // ================================================================================
     public function execute($_options = array())
