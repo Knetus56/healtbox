@@ -41,8 +41,12 @@ class healthbox extends eqLogic
 
         $request = eqLogic::byType("info");
         log::add('healthbox', 'error', implode($request));
-
-        // $ap = $api->getNbPiece();
+        foreach (eqLogic::byType("info") as $i => $room) {
+            log::add('healthbox', 'error', implode($room));
+       
+       
+        }
+            // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
 
         // $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
