@@ -18,6 +18,7 @@
 // ================================================================================
 require_once __DIR__ . '/../../../../core/php/core.inc.php';
 require_once __DIR__ . '/../../3rdparty/healthbox_api.class.php';
+require_once __DIR__ . '/../../3rdparty/sensor_api.class.php';
 
 class healthbox extends eqLogic
 {
@@ -35,7 +36,10 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-        // $api = new healthbox_api($this->getConfiguration('iphealthbox'));
+         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
+         $sensorapi = new sensor_api($api->getData());
+
+         
         // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
 
@@ -101,7 +105,6 @@ class healthbox extends eqLogic
     // ================================================================================
     public function setLogical($name_eq, $name, $Type, $Unit, $SubType)
     {
-
         $NamePiece = str_replace(" ", "_", $name_eq);
 
         $logic = $this->getCmd(null, $NamePiece);
@@ -120,10 +123,7 @@ class healthbox extends eqLogic
     public function postSave()
     {
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
-
-
         $data = $api->getData();
-
 
         $this->setLogical('device_type', 'device_type', 'info', '', 'string');
 
@@ -132,7 +132,6 @@ class healthbox extends eqLogic
             $room_name = $room['name'];
             $this->setLogical($i . ':debit', $room_name . ':debit', 'info', '%', 'numeric');
              $this->setLogical($i . ':profil', $room_name . ':profil', 'info', '', 'numeric');
-               
 
             foreach ($room['sensor'] as $ii => $sensor) {
 
@@ -156,23 +155,9 @@ class healthbox extends eqLogic
 
         }
 
-
-
-
-
-
-        //   log::add('healthbox', 'info', $ap);
-
-        // $this->setLogical(0, 'device_type', 'info', '', 'string');
-
-        // for ($i = 1; $i <= $ap; $i++) {
-
-
-          // }
-
-        // if ($this->getIsEnable() == 1) {
-        //     $this->updatehealthbox();
-        // }
+        if ($this->getIsEnable() == 1) {
+            $this->updatehealthbox();
+        }
     }
 }
 // ================================================================================
