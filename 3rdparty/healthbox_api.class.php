@@ -101,6 +101,9 @@ class healthbox_api
     // ================================================================================
     public function getSensor($json, $param)
     {
+        log::add('healthbox', 'info', print_r($json));
+
+
         return $json['parameter'][$param]['value'];
     }
     // ================================================================================
