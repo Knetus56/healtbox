@@ -35,7 +35,6 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -113,7 +112,6 @@ class healthbox extends eqLogic
     // ================================================================================
     public function postSave()
     {
-
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $ap = $api->getNbPiece();
         //   log::add('healthbox', 'info', $ap);
@@ -146,14 +144,12 @@ class healthbox extends eqLogic
             $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
             $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
             $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
-
         }
 
         if ($this->getIsEnable() == 1) {
             $this->updatehealthbox();
         }
     }
-
 }
 // ================================================================================
 class healthboxCmd extends cmd
@@ -167,7 +163,6 @@ class healthboxCmd extends cmd
     // ================================================================================
     public function execute($_options = array())
     {
-
         if ($this->getType() == 'info') {
             return;
         }
@@ -201,6 +196,5 @@ class healthboxCmd extends cmd
         if ($eqLogic->getIsEnable() == 1) {
             $eqLogic->updatehealthbox();
         }
-
     }
 }
