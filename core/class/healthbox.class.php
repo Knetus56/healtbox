@@ -35,33 +35,33 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-        $api = new healthbox_api($this->getConfiguration('iphealthbox'));
-        $ap = $api->getNbPiece();
-        //   log::add('healthbox', 'info', $ap);
+        // $api = new healthbox_api($this->getConfiguration('iphealthbox'));
+        // $ap = $api->getNbPiece();
+        // //   log::add('healthbox', 'info', $ap);
 
-        $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
+        // $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
 
-        for ($i = 1; $i <= $ap; $i++) {
-            $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':temperature', $api->getTemperature($i));
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':humidity', $api->getHumidity($i));
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':profil', $api->getProfil($i));
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':debit', $api->getDebit($i));
-            $CO2 = $api->isCO2($i);
-            if ($CO2) {
-                $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':CO2', $api->getCO2($i));
-            }
-            $COV = $api->isCOV($i);
-            if ($COV) {
-                $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
-            }
-            $boost = $api->getBoost($i);
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
-            $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-timeout', $boost['timeout']);
-        }
-        $this->refreshWidget();
+        // for ($i = 1; $i <= $ap; $i++) {
+        //     $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':temperature', $api->getTemperature($i));
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':humidity', $api->getHumidity($i));
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':profil', $api->getProfil($i));
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':debit', $api->getDebit($i));
+        //     $CO2 = $api->isCO2($i);
+        //     if ($CO2) {
+        //         $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':CO2', $api->getCO2($i));
+        //     }
+        //     $COV = $api->isCOV($i);
+        //     if ($COV) {
+        //         $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
+        //     }
+        //     $boost = $api->getBoost($i);
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
+        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-timeout', $boost['timeout']);
+        // }
+        // $this->refreshWidget();
     }
     // ================================================================================
     public function preInsert()
@@ -82,26 +82,33 @@ class healthbox extends eqLogic
     }
 
     // ================================================================================
-    public function postUpdate()
+    private function checkType($type)
     {
+        if ($type == "indoor relative humidity") {
+            return ['humidity', '%'];
+        } elseif ($type == "indoor temperature") {
+            return ['temperature', '°C'];
+        } elseif ($type == "indoor air quality index") {
+            return ['index', ''];
+        } elseif ($type == "indoor CO2") {
+            return ["CO2", 'ppm'];
+        } elseif ($type == "indoor volatile organic compounds") {
+            return ["COV", 'ppm'];
+        } else {
+            return 'error';
+        }
     }
-
     // ================================================================================
-    public function preSave()
-    {
-    }
-
-    // ================================================================================
-    public function setLogical($i, $room, $Type, $Unit, $SubType)
+    public function setLogical($name_eq, $name, $Type, $Unit, $SubType)
     {
 
-        $NamePiece = str_replace(" ", "_", $i . ':' . $room);
+        $NamePiece = str_replace(" ", "_", $name_eq);
 
         $logic = $this->getCmd(null, $NamePiece);
         if (!is_object($logic)) {
             $logic = new healthboxCmd();
         }
-        $logic->setName(__($room, __FILE__));
+        $logic->setName(__($name, __FILE__));
         $logic->setLogicalId($NamePiece);
         $logic->setEqLogic_id($this->getId());
         $logic->setType($Type);
@@ -113,42 +120,70 @@ class healthbox extends eqLogic
     public function postSave()
     {
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
-        $ap = $api->getNbPiece();
+
+
+        $data = $api->getData();
+
+
+        $this->setLogical('device_type', 'device_type', 'info', '', 'string');
+
+        foreach ($data['room'] as $i => $room) {
+
+            $room_name = $room['name'];
+
+            foreach ($room['sensor'] as $ii => $sensor) {
+
+                $type = $this->checkType($sensor['type']);
+
+                if (is_array($type)) {
+                    $name_eq = $i . ':' . $room_name . ':' . $ii . ':' . $type[0];
+                    $name = $room_name . ':' . $type[0];
+                    $this->setLogical( $name_eq, $name, 'info', $type[1], 'numeric');
+                }
+            }
+
+        }
+
+
+
+
+
+
         //   log::add('healthbox', 'info', $ap);
 
-        $this->setLogical(0, 'device_type', 'info', '', 'string');
+        // $this->setLogical(0, 'device_type', 'info', '', 'string');
 
-        for ($i = 1; $i <= $ap; $i++) {
+        // for ($i = 1; $i <= $ap; $i++) {
 
-            $NamePiece = $api->getNamePiece($i);
-            $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
-            $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
-            $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
-            $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
+        //     $NamePiece = $api->getNamePiece($i);
+        //     $this->setLogical($i, $NamePiece . ':temperature', 'info', '°C', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':humidity', 'info', '%', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
 
-            $CO2 = $api->isCO2($i);
-            if ($CO2) {
-                $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
-            }
+        //     $CO2 = $api->isCO2($i);
+        //     if ($CO2) {
+        //         $this->setLogical($i, $NamePiece . ':CO2', 'info', 'ppm', 'numeric');
+        //     }
 
-            $COV = $api->isCOV($i);
-            if ($COV) {
-                $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
-            }
+        //     $COV = $api->isCOV($i);
+        //     if ($COV) {
+        //         $this->setLogical($i, $NamePiece . ':COV', 'info', 'ppm', 'numeric');
+        //     }
 
-            $this->setLogical($i, $NamePiece . ':boost-enable', 'info', '', 'binary');
-            $this->setLogical($i, $NamePiece . ':boost-level', 'info', '', 'numeric');
-            $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
-            $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':boost-enable', 'info', '', 'binary');
+        //     $this->setLogical($i, $NamePiece . ':boost-level', 'info', '', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':boost-remaining', 'info', '', 'numeric');
+        //     $this->setLogical($i, $NamePiece . ':boost-timeout', 'info', '', 'numeric');
 
-            $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
-            $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
-            $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
-        }
+        //     $this->setLogical($i, $NamePiece . ':changeProfil', 'action', '', 'other');
+        //     $this->setLogical($i, $NamePiece . ':boostON', 'action', '', 'other');
+        //     $this->setLogical($i, $NamePiece . ':boostOFF', 'action', '', 'other');
+        // }
 
-        if ($this->getIsEnable() == 1) {
-            $this->updatehealthbox();
-        }
+        // if ($this->getIsEnable() == 1) {
+        //     $this->updatehealthbox();
+        // }
     }
 }
 // ================================================================================
