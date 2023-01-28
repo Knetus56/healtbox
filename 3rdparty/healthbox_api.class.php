@@ -96,8 +96,7 @@ class healthbox_api
     // ================================================================================
     public function getProfil($json)
     {
-        log::add('healthbox', 'info', print_r($json['parameter']['profile_name']));
-        return array_search($json['parameter']['profile_name'], self::PROFIL);
+        return $json['parameter']['profile_name'];
     }
     // ================================================================================
     public function getSensor($json, $param)
