@@ -9,13 +9,11 @@ class healthbox_api
     private const PROFIL = ["eco", "health", "intense"];
     private const URL_DATA = '/v2/api/data/current';
     private const URL_BOOST = '/v2/api/boost/';
+    private const URL_PROFIL = '/v2/api/data/current/room/';
 
     public function __construct($ip)
     {
         $this->setip($ip);
-        $this->_data = "";
-        $this->_dataBoost = "";
-        $this->getData();
     }
     // ================================================================================
     public function setip($ip)
@@ -40,7 +38,7 @@ class healthbox_api
 
         $json = curl_exec($session);
         curl_close($session);
-        $this->_data = json_decode($json, true);
+        return json_decode($json, true);
     }
     // ================================================================================
     public function getBoost($i)
@@ -152,7 +150,7 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . self::PROFIL[$profil] . '"');
+        $this->put(self::URL_PROFIL . $i . '/profile_name', '"' . self::PROFIL[$profil] . '"');
     }
     // ================================================================================
     public function enableBoost($i, $j)
