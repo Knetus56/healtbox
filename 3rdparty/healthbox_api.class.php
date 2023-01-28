@@ -96,15 +96,13 @@ class healthbox_api
     // ================================================================================
     public function getProfil($json)
     {
+        log::add('healthbox', 'info', print_r($json));
         return array_search($json['parameter']['profile_name'], self::PROFIL);
     }
     // ================================================================================
     public function getSensor($json, $param)
     {
-        log::add('healthbox', 'info', print_r($json));
-
-
-        return $json['parameter'][$param]['value'];
+        return round($json['parameter'][$param]['value']);
     }
     // ================================================================================
     public function changeProfil($i, $profil)
