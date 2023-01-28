@@ -41,7 +41,7 @@ class healthbox extends eqLogic
 
 
         foreach ($this->getCmd() as $cmd) {
-            $this->log('healthbox', 'debug',print_r($cmd));
+            log::add('healthbox', 'debug',print_r($cmd));
         }
         // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
