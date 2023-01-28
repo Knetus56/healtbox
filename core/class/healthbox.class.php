@@ -129,16 +129,20 @@ class healthbox extends eqLogic
         }
     }
     // ================================================================================
-    public function setLogical($i, $name, $Type, $Unit, $SubType)
+    public function setLogical($i, $room, $name, $Type, $Unit, $SubType)
     {
-        $NamePiece = str_replace(" ", "_", $i . ':' . $name);
+        $NamePLogical = $i . ':' . $name;
 
-        $logic = $this->getCmd(null, $NamePiece);
+        $logic = $this->getCmd(null, $NamePLogical);
         if (!is_object($logic)) {
             $logic = new healthboxCmd();
         }
-        $logic->setName(__($name, __FILE__));
-        $logic->setLogicalId($NamePiece);
+        if ($room == '') {
+            $logic->setName(__($name, __FILE__));
+        } else {
+            $logic->setName(__($room . ':' . $name, __FILE__));
+        }
+        $logic->setLogicalId($NamePLogical);
         $logic->setEqLogic_id($this->getId());
         $logic->setType($Type);
         $logic->setUnite($Unit);
@@ -151,30 +155,30 @@ class healthbox extends eqLogic
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $data = $api->getData();
 
-        $this->setLogical('0', 'device_type', 'info', '', 'string');
+        $this->setLogical('0', '', 'device_type', 'info', '', 'string');
 
         foreach ($data['room'] as $i => $room) {
 
             $room_name = $room['name'];
-            $this->setLogical($i, $room_name . ':debit', 'info', '%', 'numeric');
-            $this->setLogical($i, $room_name . ':profil', 'info', '', 'numeric');
+            $this->setLogical($i, $room_name, 'debit', 'info', '%', 'numeric');
+            $this->setLogical($i, $room_name, 'profil', 'info', '', 'numeric');
 
             foreach ($room['sensor'] as $ii => $sensor) {
 
                 $type = $this->checkType($sensor['type']);
 
                 if (is_array($type)) {
-                    $this->setLogical($i, $room_name . ':' . $type[0], 'info', $type[1], 'numeric');
+                    $this->setLogical($i, $room_name, $type[0], 'info', $type[1], 'numeric');
                 }
 
-                $this->setLogical($i, $room_name . ':boost-enable', 'info', '', 'binary');
-                $this->setLogical($i, $room_name . ':boost-level', 'info', '', 'numeric');
-                $this->setLogical($i, $room_name . ':boost-remaining', 'info', '', 'numeric');
-                $this->setLogical($i, $room_name . ':boost-timeout', 'info', '', 'numeric');
+                $this->setLogical($i, $room_name, 'boost-enable', 'info', '', 'binary');
+                $this->setLogical($i, $room_name, 'boost-level', 'info', '', 'numeric');
+                $this->setLogical($i, $room_name, 'boost-remaining', 'info', '', 'numeric');
+                $this->setLogical($i, $room_name, 'boost-timeout', 'info', '', 'numeric');
 
-                $this->setLogical($i, $room_name . ':changeProfil', 'action', '', 'other');
-                $this->setLogical($i, $room_name . ':boostON', 'action', '', 'other');
-                $this->setLogical($i, $room_name . ':boostOFF', 'action', '', 'other');
+                $this->setLogical($i, $room_name, 'changeProfil', 'action', '', 'other');
+                $this->setLogical($i, $room_name, 'boostON', 'action', '', 'other');
+                $this->setLogical($i, $room_name, 'boostOFF', 'action', '', 'other');
             }
 
         }
