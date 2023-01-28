@@ -45,7 +45,7 @@ class healthbox extends eqLogic
             $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($room));
             $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($room));
 
-            foreach ($room['sensor'] as $ii => $sensor) {
+            foreach ($room['sensor'] as $sensor) {
 
                 $type = $api->checkType($sensor['type']);
 
@@ -86,7 +86,7 @@ class healthbox extends eqLogic
         //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
         //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-timeout', $boost['timeout']);
         // }
-        // $this->refreshWidget();
+         $this->refreshWidget();
     }
     // ================================================================================
     public function preInsert()
