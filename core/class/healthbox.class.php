@@ -130,13 +130,16 @@ class healthbox extends eqLogic
         foreach ($data['room'] as $i => $room) {
 
             $room_name = $room['name'];
+            $this->setLogical($i . ':debit', $room_name . ':debit', 'info', '%', 'numeric');
+             $this->setLogical($i . ':profil', $room_name . ':profil', 'info', '', 'numeric');
+               
 
             foreach ($room['sensor'] as $ii => $sensor) {
 
                 $type = $this->checkType($sensor['type']);
 
                 if (is_array($type)) {
-                    $name_eq = $i . ':' . $room_name . ':' . $ii . ':' . $type[0];
+                    $name_eq = $i . ':' . $room_name . ':' . $ii ;
                     $name = $room_name . ':' . $type[0];
                     $this->setLogical($name_eq, $name, 'info', $type[1], 'numeric');
                 }
@@ -165,10 +168,7 @@ class healthbox extends eqLogic
         // for ($i = 1; $i <= $ap; $i++) {
 
 
-        //     $this->setLogical($i, $NamePiece . ':debit', 'info', '%', 'numeric');
-        //     $this->setLogical($i, $NamePiece . ':profil', 'info', '', 'numeric');
-
-        // }
+          // }
 
         // if ($this->getIsEnable() == 1) {
         //     $this->updatehealthbox();
