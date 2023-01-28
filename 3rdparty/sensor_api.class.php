@@ -23,7 +23,7 @@ class sensor_api
     // ================================================================================
 
     // ================================================================================
-    public function getDevice()
+    public function getDescription()
     {
         return $this->_data['description'];
     }
