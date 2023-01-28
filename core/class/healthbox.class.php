@@ -39,32 +39,27 @@ class healthbox extends eqLogic
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $data = $api->getData();
 
-
         $this->checkAndUpdateCmd('0:device_type', $data['description']);
-        // foreach ($data['room'] as $i => $room) {
 
-        //     $room_name = str_replace(" ", "_", $room['name']);
-        //     //  $this->setLogical($room_name . ':debit', 'info', '%', 'numeric');
-        //     //  $this->setLogical($room_name . ':profil', 'info', '', 'numeric');
+        foreach ($data['room'] as $i => $room) {
+            $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($i));
+            $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($i));
 
-        //     foreach ($room['sensor'] as $ii => $sensor) {
+            foreach ($room['sensor'] as $ii => $sensor) {
 
-        //         $type = $this->checkType($sensor['type']);
+                $type = $this->checkType($sensor['type']);
 
-        //         if (is_array($type)) {
-        //             //       $this->setLogical($room_name . ':' . $type[0], 'info', $type[1], 'numeric');
-        //         }
+                if (is_array($type)) {
+                    $this->checkAndUpdateCmd($i . ':' . $type[0], $sensor[$ii]['parameter'][$type[0]]['value']);
+                }
 
-        //         $boost = $api->getBoost($i);
-        //         $this->checkAndUpdateCmd($NamePiece . ':boost-enable', $boost['enable']);
-        //         $this->checkAndUpdateCmd($NamePiece . ':boost-level', $boost['level']);
-        //         $this->checkAndUpdateCmd($NamePiece . ':boost-remaining', $boost['remaining']);
-        //         $this->checkAndUpdateCmd($NamePiece . ':boost-timeout', $boost['timeout']);
-
-        //     }
-
-        // }
-
+                $boost = $api->getBoost($i);
+                $this->checkAndUpdateCmd($i . ':boost-enable', $boost['enable']);
+                $this->checkAndUpdateCmd($i . ':boost-level', $boost['level']);
+                $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
+                $this->checkAndUpdateCmd($i . ':boost-timeout', $boost['timeout']);
+            }
+        }
 
         // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
@@ -163,7 +158,7 @@ class healthbox extends eqLogic
             $this->setLogical($i, $room_name, 'debit', 'info', '%', 'numeric');
             $this->setLogical($i, $room_name, 'profil', 'info', '', 'numeric');
 
-            foreach ($room['sensor'] as $ii => $sensor) {
+            foreach ($room['sensor'] as $sensor) {
 
                 $type = $this->checkType($sensor['type']);
 
