@@ -36,12 +36,12 @@ class healthbox extends eqLogic
     // ================================================================================
     public function updatehealthbox()
     {
-         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
-         $sensorapi = new sensor_api($api->getData());
-       
-         $request = eqLogic::byType("info");
-         log::add('healthbox', 'debug', $request[1]);
-        
+        $api = new healthbox_api($this->getConfiguration('iphealthbox'));
+        $sensorapi = new sensor_api($api->getData());
+
+        $request = eqLogic::byType("info");
+        log::add('healthbox', 'debug', implode($request));
+
         // $ap = $api->getNbPiece();
         // //   log::add('healthbox', 'info', $ap);
 
@@ -133,14 +133,14 @@ class healthbox extends eqLogic
 
             $room_name = $room['name'];
             $this->setLogical($i . ':debit', $room_name . ':debit', 'info', '%', 'numeric');
-             $this->setLogical($i . ':profil', $room_name . ':profil', 'info', '', 'numeric');
+            $this->setLogical($i . ':profil', $room_name . ':profil', 'info', '', 'numeric');
 
             foreach ($room['sensor'] as $ii => $sensor) {
 
                 $type = $this->checkType($sensor['type']);
 
                 if (is_array($type)) {
-                    $name_eq = $i . ':' . $room_name . ':' . $ii ;
+                    $name_eq = $i . ':' . $room_name . ':' . $ii;
                     $name = $room_name . ':' . $type[0];
                     $this->setLogical($name_eq, $name, 'info', $type[1], 'numeric');
                 }
