@@ -60,33 +60,7 @@ class healthbox extends eqLogic
                 $this->checkAndUpdateCmd($i . ':boost-timeout', $boost['timeout']);
             }
         }
-
-        // $ap = $api->getNbPiece();
-        // //   log::add('healthbox', 'info', $ap);
-
-        // $this->checkAndUpdateCmd('0:' . 'device_type', $api->getDevice());
-
-        // for ($i = 1; $i <= $ap; $i++) {
-        //     $NamePiece = str_replace(" ", "_", $api->getNamePiece($i));
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':temperature', $api->getTemperature($i));
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':humidity', $api->getHumidity($i));
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':profil', $api->getProfil($i));
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':debit', $api->getDebit($i));
-        //     $CO2 = $api->isCO2($i);
-        //     if ($CO2) {
-        //         $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':CO2', $api->getCO2($i));
-        //     }
-        //     $COV = $api->isCOV($i);
-        //     if ($COV) {
-        //         $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':COV', $api->getCOV($i));
-        //     }
-        //     $boost = $api->getBoost($i);
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-enable', $boost['enable']);
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-level', $boost['level']);
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-remaining', $boost['remaining']);
-        //     $this->checkAndUpdateCmd($i . ':' . $NamePiece . ':boost-timeout', $boost['timeout']);
-        // }
-         $this->refreshWidget();
+        $this->refreshWidget();
     }
     // ================================================================================
     public function preInsert()
@@ -142,7 +116,7 @@ class healthbox extends eqLogic
 
             foreach ($room['sensor'] as $sensor) {
 
-                $type =$api->checkType($sensor['type']);
+                $type = $api->checkType($sensor['type']);
 
                 if (is_array($type)) {
                     $this->setLogical($i, $room_name, $type[0], 'info', $type[1], 'numeric');
@@ -191,7 +165,7 @@ class healthboxCmd extends cmd
 
         $p = explode(":", $this->getLogicalId());
 
-        if ($p[2] == 'changeProfil') {
+        if ($p[1] == 'changeProfil') {
             if (is_numeric($request)) {
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
                 $api->changeProfil($p[0], intval($request));
@@ -199,7 +173,7 @@ class healthboxCmd extends cmd
                 log::add('healthbox', 'error', 'Commande changeProfil : Donnée non numérique');
                 return false;
             }
-        } elseif ($p[2] == 'boostON') {
+        } elseif ($p[1] == 'boostON') {
             if ($this->isJson($request)) {
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
                 $api->enableBoost($p[0], $request);
@@ -207,7 +181,7 @@ class healthboxCmd extends cmd
                 log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
                 return false;
             }
-        } elseif ($p[2] == 'boostOFF') {
+        } elseif ($p[1] == 'boostOFF') {
             $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
             $api->disableBoost($p[0]);
         }
