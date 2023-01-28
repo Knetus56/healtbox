@@ -6,9 +6,9 @@ class healthbox_api
     private $_ip;
     private $_data;
     private $_dataBoost;
-    private $_profil = ["eco", "health", "intense"];
-    private $_url_data = '/v2/api/data/current';
-    private $_url_boost = '/v2/api/boost/';
+    private const PROFIL = ["eco", "health", "intense"];
+    private const URL_DATA = '/v2/api/data/current';
+    private const URL_BOOST = '/v2/api/boost/';
 
     public function __construct($ip)
     {
@@ -33,7 +33,7 @@ class healthbox_api
         $session = curl_init();
 
         curl_setopt_array($session, [
-            CURLOPT_URL => "http://" . $this->_ip . $this->_url_data,
+            CURLOPT_URL => "http://" . $this->_ip . self::URL_DATA,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
@@ -45,13 +45,10 @@ class healthbox_api
     // ================================================================================
     public function getBoost($i)
     {
-
-        log::add('healthbox', 'info', "http://" . $this->_ip . $this->_url_boost . $i);
-
         $session = curl_init();
 
         curl_setopt_array($session, [
-            CURLOPT_URL => "http://" . $this->_ip . $this->_url_boost . $i,
+            CURLOPT_URL => "http://" . $this->_ip . self::URL_BOOST . $i,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
@@ -63,10 +60,6 @@ class healthbox_api
     // ================================================================================
     public function put($url, $data)
     {
-
-        log::add('healthbox', 'info', "http://" . $this->_ip . $url);
-        log::add('healthbox', 'info', $data);
-
         $curl = curl_init();
         curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
@@ -77,7 +70,6 @@ class healthbox_api
         ]);
 
         $response = curl_exec($curl);
-        log::add('healthbox', 'debug', $response);
         curl_close($curl);
         return $response;
     }
@@ -116,7 +108,7 @@ class healthbox_api
     // ================================================================================
     public function getProfil($i)
     {
-        return array_search($this->_data['room'][$i]['profile_name'], $this->_profil);
+        return array_search($this->_data['room'][$i]['profile_name'], self::PROFIL);
     }
     // ================================================================================
     public function getNbPiece()
@@ -160,15 +152,15 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . $this->_profil[$profil] . '"');
+        $this->put('/v2/api/data/current/room/' . $i . '/profile_name', '"' . self::PROFIL[$profil] . '"');
     }
     // ================================================================================
     public function enableBoost($i, $j)
     {
-        $this->put('/v2/api/boost/' . $i, $j);
+        $this->put(self::URL_BOOST . $i, $j);
     }
     public function disableBoost($i)
     {
-        $this->put('/v2/api/boost/' . $i, '{"enable": false}');
+        $this->put(self::URL_BOOST . $i, '{"enable": false}');
     }
 }
