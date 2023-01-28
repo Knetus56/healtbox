@@ -18,21 +18,21 @@
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // Modals associated to buttons "Rechercher équipement" for Action and Info Cmd
 //
-$("#table_cmd").delegate(".listEquipementAction", 'click', function() {
-	var el = $(this);
-	jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function(result) {
-		var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
-		calcul.value(result.human);
-	});
+$("#table_cmd").delegate(".listEquipementAction", 'click', function () {
+  var el = $(this);
+  jeedom.cmd.getSelectModal({ cmd: { type: 'action' } }, function (result) {
+    var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
+    calcul.value(result.human);
+  });
 });
 
 $("#table_cmd").delegate(".listEquipementInfo", 'click', function () {
-	var el = $(this);
-	jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function (result) {
-		var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.data('input') + ']');
-		calcul.atCaret('insert', result.human);
-		jeeFrontEnd.modifyWithoutSave = true
-	});
+  var el = $(this);
+  jeedom.cmd.getSelectModal({ cmd: { type: 'info' } }, function (result) {
+    var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.data('input') + ']');
+    calcul.atCaret('insert', result.human);
+    jeeFrontEnd.modifyWithoutSave = true
+  });
 });
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
@@ -92,8 +92,8 @@ function addCmdToTable(_cmd) {
   tr += '</td><td align="right">';
   if (is_numeric(_cmd.id)) {
     tr += '<a class="btn btn-default btn-xs cmdAction" data-action="configure"><i class="fas fa-cogs"></i></a> ';
-  tr += '</td><td>';
-  tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
+    tr += '</td><td>';
+    tr += '<a class="btn btn-default btn-xs cmdAction" data-action="test"><i class="fas fa-rss"></i> {{Tester}}</a>';
   }
   tr += '&nbsp; &nbsp; <i class="fas fa-minus-circle pull-right cmdAction cursor" data-action="remove"></i>';
   tr += '</td></tr>';
