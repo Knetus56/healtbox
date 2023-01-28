@@ -63,16 +63,6 @@ class healthbox extends eqLogic
         $this->refreshWidget();
     }
     // ================================================================================
-    public function preInsert()
-    {
-    }
-
-    // ================================================================================
-    public function postInsert()
-    {
-    }
-
-    // ================================================================================
     public function preUpdate()
     {
         if ($this->getConfiguration('iphealthbox') == '') {
