@@ -24,7 +24,6 @@ class healthbox extends eqLogic
     // ================================================================================
     public static function cron()
     {
-
         foreach (healthbox::byType('healthbox') as $eqLogic) {
             try {
                 $eqLogic->updatehealthbox();
