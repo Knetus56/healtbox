@@ -50,7 +50,7 @@ class healthbox extends eqLogic
                 $type = $this->checkType($sensor['type']);
 
                 if (is_array($type)) {
-                    $this->checkAndUpdateCmd($i . ':' . $type[0], $sensor[$ii]['parameter'][$type[0]]['value']);
+                    $this->checkAndUpdateCmd($i . ':' . $type[0], $sensor['parameter'][$type[0]]['value']);
                 }
 
                 $boost = $api->getBoost($i);
