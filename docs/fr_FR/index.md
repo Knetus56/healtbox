@@ -25,14 +25,14 @@ Commandes :
 Commandes INFO:
 ---
 
-   - 'nom de la piece':temperature : retourne la température de l'air au niveau du capteur de la pièce.
-   - 'nom de la piece':humidity : retourne l'humidité de l'air au niveau du capteur de la pièce.
-   - 'nom de la piece':debit : retourne le débit d'air du capteur de la pièce en %.
-   - 'nom de la piece':boost-timeout : retourne le temps restant du BOOST.
-   - 'nom de la piece':boost-enable : retourne l'état du BOOST :
+- 'nom de la piece':temperature : retourne la température de l'air au niveau du capteur de la pièce.
+- 'nom de la piece':humidity : retourne l'humidité de l'air au niveau du capteur de la pièce.
+- 'nom de la piece':debit : retourne le débit d'air du capteur de la pièce en %.
+- 'nom de la piece':boost-timeout : retourne le temps restant du BOOST.
+- 'nom de la piece':boost-enable : retourne l'état du BOOST :
           - 0 : Inactif
           - 1 : Actif
-   - 'nom de la piece':profil : retourne l'état du Profil :
+- 'nom de la piece':profil : retourne l'état du Profil :
           - 0 : Eco
           - 1 : Health
           - 2 : Intense
