@@ -13,6 +13,7 @@ Celui-ci se trouve dans l'application dédié à la vmc.
 
 Configuration :
 ===
+> Après téléchargement du plugin, il faut l’activer.
 
 Rentrer l'IP de votre VMC dans Paramètres spécifiques
 
