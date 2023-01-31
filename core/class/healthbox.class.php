@@ -54,9 +54,7 @@ class healthbox extends eqLogic
 
                 $boost = $api->getBoost($i);
                 $this->checkAndUpdateCmd($i . ':boost-enable', $boost['enable']);
-                $this->checkAndUpdateCmd($i . ':boost-level', $boost['level']);
                 $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
-                $this->checkAndUpdateCmd($i . ':boost-timeout', $boost['timeout']);
             }
         }
         $this->refreshWidget();
@@ -112,9 +110,8 @@ class healthbox extends eqLogic
                 }
 
                 $this->setLogical($i, $room_name, 'boost-enable', 'info', '', 'binary');
-                $this->setLogical($i, $room_name, 'boost-level', 'info', '', 'numeric');
                 $this->setLogical($i, $room_name, 'boost-remaining', 'info', '', 'numeric');
-                $this->setLogical($i, $room_name, 'boost-timeout', 'info', '', 'numeric');
+
 
                 $this->setLogical($i, $room_name, 'changeProfil', 'action', '', 'other');
                 $this->setLogical($i, $room_name, 'boostON', 'action', '', 'other');
