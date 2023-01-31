@@ -21,6 +21,35 @@ Rentrer l'IP de votre VMC dans Paramètres spécifiques
 Commandes :
 ===
 
+
+- Commandes INFO:
+===
+
+   - 'nom de la piece':temperature : retourne la température de l'air au niveau du capteur de la pièce.
+   - 'nom de la piece':humidity : retourne l'humidité de l'air au niveau du capteur de la pièce.
+   - 'nom de la piece':debit : retourne le débit d'air du capteur de la pièce en %.
+   - 'nom de la piece':boost-timeout : retourne le temps restant du BOOST.
+   - 'nom de la piece':boost-enable : retourne l'état du BOOST :
+          - 0 : Inactif
+          - 1 : Actif
+   - 'nom de la piece':profil : retourne l'état du Profil :
+          - 0 : Eco
+          - 1 : Health
+          - 2 : Intense
+
+
+
+
+
+
+
+
+
+
+
+- Commandes ACTION:
+===
+
 la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
 
 > IMPORTANT :  Bien mettre des apostrophes entourant la commande JSON
@@ -30,3 +59,5 @@ la commande BOOST permet d'activer le boost dans une piece selon un temps désir
    - enable : laisser a true
    - level : niveau de ventilation voulue.
    - timeout : temps voulu du boost en seconde.
+
+
