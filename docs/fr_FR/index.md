@@ -21,6 +21,11 @@ Rentrer l'IP de votre VMC dans Paramètres spécifiques
 Commandes :
 ===
 
+la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
+
 - 'nom de la piece':boostOFF  =  laisser vide
-
-
+> Après téléchargement du plugin, il faut l’activer.
+- 'nom de la piece':boostON  = '{"enable": true, "level": 200, "timeout": 900}' ou : 
+   - enable : laisser a true
+   - level : niveau de ventilation voulue.
+   - timeout : temps voulu du boost en seconde.
