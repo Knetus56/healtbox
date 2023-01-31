@@ -22,8 +22,8 @@ Commandes :
 ===
 
 
-- Commandes INFO:
-===
+Commandes INFO:
+---
 
    - 'nom de la piece':temperature : retourne la température de l'air au niveau du capteur de la pièce.
    - 'nom de la piece':humidity : retourne l'humidité de l'air au niveau du capteur de la pièce.
@@ -47,8 +47,8 @@ Commandes :
 
 
 
-- Commandes ACTION:
-===
+Commandes ACTION:
+---
 
 la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
 
