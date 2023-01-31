@@ -1,6 +1,9 @@
+<img align="right" src="plugin_info/healtbox_icon.png" width="150">
+
 # jeedom-Healtbox
 Ce plugin Jeedom permet de controler les VMC RENSON HEALTBOX 3
 
-* Accès à la [documentation](./docs/fr_FR/index.md).
+*[Documentation](./docs/fr_FR/index.md)*
 
-* Accès au [changelog](./docs/fr_FR/changelog.md).
+*[changelog](./docs/fr_FR/changelog.md)*
+
