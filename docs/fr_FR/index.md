@@ -21,6 +21,6 @@ Rentrer l'IP de votre VMC dans Paramètres spécifiques
 Commandes :
 ===
 
--nom de la piece:boostOFF  =  laisser vide
+- 'nom de la piece':boostOFF  =  laisser vide
 
 
