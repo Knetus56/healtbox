@@ -23,8 +23,9 @@ Commandes :
 
 la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
 
-- 'nom de la piece':boostOFF  =  laisser vide
 > IMPORTANT :  Bien mettre des apostrophes entourant la commande JSON
+
+- 'nom de la piece':boostOFF  =  laisser vide
 - 'nom de la piece':boostON  = '{"enable": true, "level": 200, "timeout": 900}' ou : 
    - enable : laisser a true
    - level : niveau de ventilation voulue.
