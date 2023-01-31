@@ -30,12 +30,12 @@ Commandes INFO:
 - 'nom de la piece':debit : retourne le débit d'air du capteur de la pièce en %.
 - 'nom de la piece':boost-timeout : retourne le temps restant du BOOST.
 - 'nom de la piece':boost-enable : retourne l'état du BOOST :
-          - 0 : Inactif
-          - 1 : Actif
+   - 0 : Inactif
+   - 1 : Actif
 - 'nom de la piece':profil : retourne l'état du Profil :
-          - 0 : Eco
-          - 1 : Health
-          - 2 : Intense
+   - 0 : Eco
+   - 1 : Health
+   - 2 : Intense
 
 
 
