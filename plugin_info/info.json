@@ -11,10 +11,10 @@
 	"hasDependency": false,
 	"hasOwnDeamon": false,
 	"maxDependancyInstallTime": 0,
-	"changelog": "https://knetus56.github.io/healthbox/#language#/changelog",
-	"documentation": "https://knetus56.github.io/healthbox/#language#/",
-	"changelog_beta": "https://knetus56.github.io/healthbox/#language#/beta/changelog",
-	"documentation_beta": "https://knetus56.github.io/healthbox/#language#/beta/",
+	"changelog": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
+	"documentation": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/index.md",
+	"changelog_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
+	"documentation_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/index.md",
 	"language": [
 		"fr_FR"
 	],
