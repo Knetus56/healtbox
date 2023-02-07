@@ -13,8 +13,8 @@
 	"maxDependancyInstallTime": 0,
 	"changelog": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
 	"documentation": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/doc.md",
-	"changelog_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelogBeta.md",
-	"documentation_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/docBeta.md",
+	"changelog_beta": "https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/changelog.md",
+	"documentation_beta": "https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/doc.md",
 	"language": [
 		"fr_FR"
 	],
