@@ -134,11 +134,6 @@ class healthboxCmd extends cmd
         json_decode($string);
         return json_last_error() === JSON_ERROR_NONE;
     }
-    // ===============================================================================
-    public function dontRemoveCmd()
-    {
-        return true;
-    }
     // ================================================================================
     public function execute($_options = array())
     {
