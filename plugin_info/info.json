@@ -6,7 +6,7 @@
 	},
 	"licence": "AGPL",
 	"author": "Knetus",
-	"require": "4.0",
+	"require": "3.2",
 	"category": "devicecommunication",
 	"hasDependency": false,
 	"hasOwnDeamon": false,
