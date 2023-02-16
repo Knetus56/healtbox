@@ -1,31 +1,31 @@
 {
-	"id": "healthbox",
-	"name": "healthbox",
-	"description": {
-		"fr_FR": "Ce plugin Jeedom permet de controler les VMC RENSON HEALTBOX 3.<br/>Prérequis :<br/>Pour pouvoir récupérer les différentes valeurs de votre VMC, il vous faut obtenir une clé.<br/>Pour cela envoyer un mail à service@renson.been en spécifiant bien le numéro de série de l'appareil."
-	},
-	"licence": "AGPL",
-	"author": "Knetus",
-	"require": "4.2.0",
-	"category": "devicecommunication",
-	"hasDependency": false,
-	"hasOwnDeamon": false,
-	"maxDependancyInstallTime": 0,
-	"changelog": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
-	"documentation": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/doc.md",
-	"changelog_beta": "https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/changelog.md",
-	"documentation_beta": "https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/doc.md",
-	"language": [
-		"fr_FR"
-	],
-	"compatibility": [
-		"miniplus",
-		"smart",
-		"rpi",
-		"docker",
-		"diy",
-		"mobile",
-		"v4",
-		"atlas"
-	]
+   "id":"healthbox",
+   "name":"healthbox",
+   "description":{
+      "fr_FR":"Ce plugin Jeedom permet de controler les VMC RENSON HEALTBOX 3.<br/>Prérequis :<br/>Pour pouvoir récupérer les différentes valeurs de votre VMC, il vous faut obtenir une clé.<br/>Pour cela envoyer un mail à service@renson.been en spécifiant bien le numéro de série de l'appareil."
+   },
+   "licence":"AGPL",
+   "author":"Knetus",
+   "require":"4.2.0",
+   "category":"devicecommunication",
+   "hasDependency":false,
+   "hasOwnDeamon":false,
+   "maxDependancyInstallTime":0,
+   "changelog":"https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
+   "documentation":"https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/doc.md",
+   "changelog_beta":"https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/changelog.md",
+   "documentation_beta":"https://github.com/Knetus56/healthbox/tree/beta/docs/fr_FR/doc.md",
+   "language":[
+      "fr_FR"
+   ],
+   "compatibility":[
+      "miniplus",
+      "smart",
+      "rpi",
+      "docker",
+      "diy",
+      "mobile",
+      "v4",
+      "atlas"
+   ]
 }
