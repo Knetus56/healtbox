@@ -6,7 +6,7 @@
 	},
 	"licence": "AGPL",
 	"author": "Knetus",
-	"require": "3.2",
+	"require": "4.0",
 	"category": "devicecommunication",
 	"hasDependency": false,
 	"hasOwnDeamon": false,
@@ -15,17 +15,6 @@
 	"documentation": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/index.md",
 	"changelog_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/changelog.md",
 	"documentation_beta": "https://github.com/Knetus56/healthbox/blob/master/docs/fr_FR/index.md",
-	"language": [
-		"fr_FR"
-	],
-	"compatibility": [
-		"miniplus",
-		"smart",
-		"rpi",
-		"docker",
-		"diy",
-		"mobile",
-		"v4",
-		"atlas"
-	]
+	"languages": ["fr_FR"],
+	"compatibility": ["miniplus","smart","atlas","rpi","docker","diy","v4"]
 }
