@@ -178,9 +178,11 @@ class healthbox extends eqLogic
 
                 $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
                 $changeProfil->setType('action');
-                $changeProfil->setSubType('slider');
+                $changeProfil->setSubType('select');
                 $changeProfil->setConfiguration("minValue", 0);
                 $changeProfil->setConfiguration("maxValue", 2);
+                $changeProfil->setConfiguration("listValue", '0|eco;1|health;2|intense');
+   
                 $changeProfil->setValue($profil->getId());
                 $changeProfil->save();
 
@@ -227,9 +229,12 @@ class healthboxCmd extends cmd
 
         if ($this->getSubType() == 'slider') {
             $value = $_options['slider'];
-        } else {
+        }  else if ($this->getSubType()  == 'select') {
+            $value = $_options['select'];
+        } else  {
             $value = $this->getConfiguration("request", "");
-        }
+        } 
+    
         $result = jeedom::evaluateExpression($value);
 
         switch ($command) {
