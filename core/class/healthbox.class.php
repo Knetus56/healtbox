@@ -44,35 +44,39 @@ class healthbox extends eqLogic
     {
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $data = $api->getData();
+        if ($data) {
 
-        $this->checkAndUpdateCmd('0:device_type', $data['description']);
+            $this->checkAndUpdateCmd('0:device_type', $data['description']);
 
-        foreach ($data['room'] as $i => $room) {
-            $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($room));
-            $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($room));
+            foreach ($data['room'] as $i => $room) {
+                $this->checkAndUpdateCmd($i . ':profil', $api->getProfil($room));
+                $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($room));
 
-            foreach ($room['sensor'] as $sensor) {
-                switch ($sensor['type']) {
-                    case "indoor relative humidity":
-                        $this->checkAndUpdateCmd($i . ':' . 'humidity', $api->getSensor($sensor, 'humidity'));
-                        break;
-                    case "indoor temperature":
-                        $this->checkAndUpdateCmd($i . ':' . 'temperature', $api->getSensor($sensor, 'temperature'));
-                        break;
-                    case "indoor CO2":
-                        $this->checkAndUpdateCmd($i . ':' . 'CO2', $api->getSensor($sensor, 'concentration'));
-                        break;
-                    case "indoor volatile organic compounds":
-                        $this->checkAndUpdateCmd($i . ':' . 'COV', $api->getSensor($sensor, 'concentration'));
-                        break;
+                foreach ($room['sensor'] as $sensor) {
+                    switch ($sensor['type']) {
+                        case "indoor relative humidity":
+                            $this->checkAndUpdateCmd($i . ':' . 'humidity', $api->getSensor($sensor, 'humidity'));
+                            break;
+                        case "indoor temperature":
+                            $this->checkAndUpdateCmd($i . ':' . 'temperature', $api->getSensor($sensor, 'temperature'));
+                            break;
+                        case "indoor CO2":
+                            $this->checkAndUpdateCmd($i . ':' . 'CO2', $api->getSensor($sensor, 'concentration'));
+                            break;
+                        case "indoor volatile organic compounds":
+                            $this->checkAndUpdateCmd($i . ':' . 'COV', $api->getSensor($sensor, 'concentration'));
+                            break;
+                    }
+
+                    $boost = $api->getBoost($i);
+                    if ($boost) {
+                        $this->checkAndUpdateCmd($i . ':boost-status', $boost['enable']);
+                        $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
+                    }
                 }
-
-                $boost = $api->getBoost($i);
-                $this->checkAndUpdateCmd($i . ':boost-enable', $boost['enable']);
-                $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
             }
+            //    $this->refreshWidget();
         }
-        $this->refreshWidget();
     }
     // ================================================================================
     public function preUpdate()
@@ -106,103 +110,98 @@ class healthbox extends eqLogic
     {
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $data = $api->getData();
+        if ($data) {
 
-        $device_type = $this->getNameCmd('0', '', 'device_type');
-        $device_type->setType('info');
-        $device_type->setSubType('string');
-        $device_type->save();
+            $device_type = $this->getNameCmd('0', '', 'device_type');
+            $device_type->setType('info');
+            $device_type->setSubType('string');
+            $device_type->save();
 
-        foreach ($data['room'] as $i => $room) {
+            foreach ($data['room'] as $i => $room) {
 
-            $room_name = $room['name'];
+                $room_name = $room['name'];
 
-            $debit = $this->getNameCmd($i, $room_name, 'debit');
-            $debit->setType('info');
-            $debit->setUnite('%');
-            $debit->setIsHistorized(1);
-            $debit->setSubType('numeric');
-            $debit->save();
+                $debit = $this->getNameCmd($i, $room_name, 'debit');
+                $debit->setType('info');
+                $debit->setUnite('%');
+                $debit->setIsHistorized(1);
+                $debit->setSubType('numeric');
+                $debit->save();
 
-            $profil = $this->getNameCmd($i, $room_name, 'profil');
-            $profil->setType('info');
-            $profil->setSubType('numeric');
-            $profil->setConfiguration("minValue", 0);
-            $profil->setConfiguration("maxValue", 2);
-            $profil->save();
+                $profil = $this->getNameCmd($i, $room_name, 'profil');
+                $profil->setType('info');
+                $profil->setSubType('numeric');
+                $profil->setConfiguration("minValue", 0);
+                $profil->setConfiguration("maxValue", 2);
+                $profil->save();
 
-            foreach ($room['sensor'] as $sensor) {
-                switch ($sensor['type']) {
-                    case "indoor relative humidity":
-                        $humidity = $this->getNameCmd($i, $room_name, 'humidity');
-                        $humidity->setType('info');
-                        $humidity->setSubType('numeric');
-                        $humidity->setUnite('%');
-                        $humidity->setConfiguration("minValue", 0);
-                        $humidity->setConfiguration("maxValue", 100);
-                        $humidity->save();
-                        break;
-                    case "indoor temperature":
-                        $temperature = $this->getNameCmd($i, $room_name, 'temperature');
-                        $temperature->setType('info');
-                        $temperature->setSubType('numeric');
-                        $temperature->setUnite('°C');
-                        $temperature->save();
-                        break;
-                    case "indoor CO2":
-                        $CO2 = $this->getNameCmd($i, $room_name, 'CO2');
-                        $CO2->setType('info');
-                        $CO2->setSubType('numeric');
-                        $CO2->setIsHistorized(1);
-                        $CO2->setUnite('ppm');
-                        $CO2->save();
-                        break;
-                    case "indoor volatile organic compounds":
-                        $CO2 = $this->getNameCmd($i, $room_name, 'COV');
-                        $CO2->setType('info');
-                        $CO2->setIsHistorized(1);
-                        $CO2->setSubType('numeric');
-                        $CO2->setUnite('ppm');
-                        $CO2->save();
-                        break;
+                foreach ($room['sensor'] as $sensor) {
+                    switch ($sensor['type']) {
+                        case "indoor relative humidity":
+                            $humidity = $this->getNameCmd($i, $room_name, 'humidity');
+                            $humidity->setType('info');
+                            $humidity->setSubType('numeric');
+                            $humidity->setUnite('%');
+                            $humidity->setConfiguration("minValue", 0);
+                            $humidity->setConfiguration("maxValue", 100);
+                            $humidity->save();
+                            break;
+                        case "indoor temperature":
+                            $temperature = $this->getNameCmd($i, $room_name, 'temperature');
+                            $temperature->setType('info');
+                            $temperature->setSubType('numeric');
+                            $temperature->setUnite('°C');
+                            $temperature->save();
+                            break;
+                        case "indoor CO2":
+                            $CO2 = $this->getNameCmd($i, $room_name, 'CO2');
+                            $CO2->setType('info');
+                            $CO2->setSubType('numeric');
+                            $CO2->setIsHistorized(1);
+                            $CO2->setUnite('ppm');
+                            $CO2->save();
+                            break;
+                        case "indoor volatile organic compounds":
+                            $CO2 = $this->getNameCmd($i, $room_name, 'COV');
+                            $CO2->setType('info');
+                            $CO2->setIsHistorized(1);
+                            $CO2->setSubType('numeric');
+                            $CO2->setUnite('ppm');
+                            $CO2->save();
+                            break;
+                    }
+
+                    $boostenable = $this->getNameCmd($i, $room_name, 'boost-status');
+                    $boostenable->setType('info');
+                    $boostenable->setSubType('binary');
+                    $boostenable->save();
+
+                    $boostremaining = $this->getNameCmd($i, $room_name, 'boost-remaining');
+                    $boostremaining->setType('info');
+                    $boostremaining->setSubType('numeric');
+                    $boostremaining->save();
+
+                    $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
+                    $changeProfil->setType('action');
+                    $changeProfil->setSubType('slider');
+                    $changeProfil->setConfiguration("minValue", 0);
+                    $changeProfil->setConfiguration("maxValue", 2);
+                    $changeProfil->setConfiguration("listValue", '0|eco;1|health;2|intense');
+                    $changeProfil->setValue($profil->getId());
+                    $changeProfil->save();
+
+                    $boostON = $this->getNameCmd($i, $room_name, 'boost-toogle');
+                    $boostON->setType('action');
+                    $boostON->setSubType('other');
+                    $boostON->setConfiguration("request", '{"level": 200, "timeout": 900};');
+                    $boostON->setValue($boostenable->getId());
+                    $boostON->save();
                 }
-
-                $boostenable = $this->getNameCmd($i, $room_name, 'boost-enable');
-                $boostenable->setType('info');
-                $boostenable->setSubType('binary');
-                $boostenable->save();
-
-                $boostremaining = $this->getNameCmd($i, $room_name, 'boost-remaining');
-                $boostremaining->setType('info');
-                $boostremaining->setSubType('numeric');
-                $boostremaining->save();
-
-                $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
-                $changeProfil->setType('action');
-                $changeProfil->setSubType('select');
-                $changeProfil->setConfiguration("minValue", 0);
-                $changeProfil->setConfiguration("maxValue", 2);
-                $changeProfil->setConfiguration("listValue", '0|eco;1|health;2|intense');
-   
-                $changeProfil->setValue($profil->getId());
-                $changeProfil->save();
-
-                $boostON = $this->getNameCmd($i, $room_name, 'boostON');
-                $boostON->setType('action');
-                $boostON->setSubType('other');
-                $boostON->setConfiguration("request", '{"enable": true, "level": 200, "timeout": 900};');
-                //   $boostON->setValue($profil->getId());
-                $boostON->save();
-
-                $boostOFF = $this->getNameCmd($i, $room_name, 'boostOFF');
-                $boostOFF->setType('action');
-                $boostOFF->setSubType('other');
-                //    $boostOFF->setValue($profil->getId());
-                $boostOFF->save();
             }
-        }
 
-        if ($this->getIsEnable() == 1) {
-            $this->updatehealthbox();
+            if ($this->getIsEnable() == 1) {
+                $this->updatehealthbox();
+            }
         }
     }
 }
@@ -229,12 +228,12 @@ class healthboxCmd extends cmd
 
         if ($this->getSubType() == 'slider') {
             $value = $_options['slider'];
-        }  else if ($this->getSubType()  == 'select') {
+        } else if ($this->getSubType() == 'select') {
             $value = $_options['select'];
-        } else  {
+        } else {
             $value = $this->getConfiguration("request", "");
-        } 
-    
+        }
+
         $result = jeedom::evaluateExpression($value);
 
         switch ($command) {
@@ -249,20 +248,29 @@ class healthboxCmd extends cmd
                 }
                 break;
 
-            case "boostON":
+            case "boost-toogle":
                 $request = substr($result, 0, -1);
-                if ($this->isJson($request)) {
-                    $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-                    $api->enableBoost($index, $request);
-                } else {
-                    log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
-                    return false;
-                }
-                break;
 
-            case "boostOFF":
+                $new = json_decode($request, true);
+                $new['enable'] = true;
+                $request = json_encode($new);
+
+                $onoff = $this->byId($this->getValue())->execCmd();
+
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-                $api->disableBoost($index);
+
+                if ($onoff === 0) {
+
+                    if ($this->isJson($request)) {
+                        $api->enableBoost($index, $request);
+                    } else {
+                        log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
+                        return false;
+                    }
+
+                } else {
+                    $api->disableBoost($index);
+                }
                 break;
         }
 
