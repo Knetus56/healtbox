@@ -70,23 +70,6 @@ class healthbox_api
         return $response;
     }
     // ================================================================================
-    public function checkType($type)
-    {
-        if ($type == "indoor relative humidity") {
-            return ['humidity', '%', 'humidity'];
-        } elseif ($type == "indoor temperature") {
-            return ['temperature', '°C', 'temperature'];
-        } elseif ($type == "indoor air quality index") {
-            return false; //['index', '','index'];
-        } elseif ($type == "indoor CO2") {
-            return ["CO2", 'ppm', 'concentration'];
-        } elseif ($type == "indoor volatile organic compounds") {
-            return ["COV", 'ppm', 'concentration'];
-        } else {
-            return false;
-        }
-    }
-    // ================================================================================
     public function getDebit($json)
     {
         $nominal = $json['parameter']['nominal']['value'];
