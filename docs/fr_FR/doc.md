@@ -15,8 +15,8 @@ Configuration :
 ===
 > Après téléchargement du plugin, il faut l’activer.
 
-Rentrer l'IP de votre VMC dans Paramètres spécifiques
-
+- Rentrer l'IP de votre VMC dans Paramètres spécifiques
+- Renseigner le CRON pour indiquer la fréquence d'actualisation voulue.
 
 Commandes :
 ===
@@ -53,7 +53,7 @@ la commande BOOST permet d'activer le boost dans une piece selon un temps désir
    - level : niveau de ventilation voulue.
    - timeout : temps voulu du boost en seconde.
 
-- 'nom de la piece':changeProfil  =  0,1 ou 2 
+- 'nom de la piece':changeProfil  =  curseur, liste ou equipement
    - 0 : Eco
    - 1 : Health
    - 2 : Intense
