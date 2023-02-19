@@ -45,7 +45,7 @@ Commandes ACTION:
 
 la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
 
-- 'nom de la piece':boost-toogle  = '{"level": 200, "timeout": 900}' ou : 
+- 'nom de la piece':boost-toogle  = {"level": 200, "timeout": 900} ou : 
    - level : niveau de ventilation voulue.
    - timeout : temps voulu du boost en seconde.
 
