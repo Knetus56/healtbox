@@ -25,13 +25,20 @@ class healthbox extends eqLogic
     public static function cron()
     {
         foreach (healthbox::byType('healthbox') as $eqLogic) {
-            try {
-                $eqLogic->updatehealthbox();
-            } catch (Exception $e) {
-                log::add('healthbox', 'info', $e->getMessage());
+            $autorefresh = $eqLogic->getConfiguration('autorefresh');
+            if ($autorefresh != '') {
+                try {
+                    $c = new Cron\CronExpression(checkAndFixCron($autorefresh), new Cron\FieldFactory);
+                    if ($c->isDue()) {
+                        $eqLogic->updatehealthbox();
+                    }
+                } catch (Exception $exc) {
+                    log::add('healthbox', 'error', __('Expression cron non valide pour', __FILE__) . ' ' . $eqLogic->getHumanName() . ' : ' . $autorefresh);
+                }
             }
         }
     }
+
     // ================================================================================
     public function updatehealthbox()
     {
@@ -45,11 +52,19 @@ class healthbox extends eqLogic
             $this->checkAndUpdateCmd($i . ':debit', $api->getDebit($room));
 
             foreach ($room['sensor'] as $sensor) {
-
-                $type = $api->checkType($sensor['type']);
-
-                if (is_array($type)) {
-                    $this->checkAndUpdateCmd($i . ':' . $type[0], $api->getSensor($sensor, $type[2]));
+                switch ($sensor['type']) {
+                    case "indoor relative humidity":
+                        $this->checkAndUpdateCmd($i . ':' . 'humidity', $api->getSensor($sensor, 'humidity'));
+                        break;
+                    case "indoor temperature":
+                        $this->checkAndUpdateCmd($i . ':' . 'temperature', $api->getSensor($sensor, 'temperature'));
+                        break;
+                    case "indoor CO2":
+                        $this->checkAndUpdateCmd($i . ':' . 'CO2', $api->getSensor($sensor, 'concentration'));
+                        break;
+                    case "indoor volatile organic compounds":
+                        $this->checkAndUpdateCmd($i . ':' . 'COV', $api->getSensor($sensor, 'concentration'));
+                        break;
                 }
 
                 $boost = $api->getBoost($i);
@@ -67,7 +82,8 @@ class healthbox extends eqLogic
         }
     }
     // ================================================================================
-    public function setLogical($i, $room, $name, $Type, $Unit, $SubType)
+
+    public function getNameCmd($i, $room, $name)
     {
         $NamePLogical = $i . ':' . $name;
 
@@ -82,10 +98,8 @@ class healthbox extends eqLogic
         }
         $logic->setLogicalId($NamePLogical);
         $logic->setEqLogic_id($this->getId());
-        $logic->setType($Type);
-        $logic->setUnite($Unit);
-        $logic->setSubType($SubType);
-        $logic->save();
+        $logic->setIsVisible(0);
+        return $logic;
     }
     // ================================================================================
     public function postSave()
@@ -93,31 +107,96 @@ class healthbox extends eqLogic
         $api = new healthbox_api($this->getConfiguration('iphealthbox'));
         $data = $api->getData();
 
-        $this->setLogical('0', '', 'device_type', 'info', '', 'string');
+        $device_type = $this->getNameCmd('0', '', 'device_type');
+        $device_type->setType('info');
+        $device_type->setSubType('string');
+        $device_type->save();
 
         foreach ($data['room'] as $i => $room) {
 
             $room_name = $room['name'];
-            $this->setLogical($i, $room_name, 'debit', 'info', '%', 'numeric');
-            $this->setLogical($i, $room_name, 'profil', 'info', '', 'numeric');
+
+            $debit = $this->getNameCmd($i, $room_name, 'debit');
+            $debit->setType('info');
+            $debit->setUnite('%');
+            $debit->setIsHistorized(1);
+            $debit->setSubType('numeric');
+            $debit->save();
+
+            $profil = $this->getNameCmd($i, $room_name, 'profil');
+            $profil->setType('info');
+            $profil->setSubType('numeric');
+            $profil->setConfiguration("minValue", 0);
+            $profil->setConfiguration("maxValue", 2);
+            $profil->save();
 
             foreach ($room['sensor'] as $sensor) {
-
-                $type = $api->checkType($sensor['type']);
-
-                if (is_array($type)) {
-                    $this->setLogical($i, $room_name, $type[0], 'info', $type[1], 'numeric');
+                switch ($sensor['type']) {
+                    case "indoor relative humidity":
+                        $humidity = $this->getNameCmd($i, $room_name, 'humidity');
+                        $humidity->setType('info');
+                        $humidity->setSubType('numeric');
+                        $humidity->setUnite('%');
+                        $humidity->setConfiguration("minValue", 0);
+                        $humidity->setConfiguration("maxValue", 100);
+                        $humidity->save();
+                        break;
+                    case "indoor temperature":
+                        $temperature = $this->getNameCmd($i, $room_name, 'temperature');
+                        $temperature->setType('info');
+                        $temperature->setSubType('numeric');
+                        $temperature->setUnite('°C');
+                        $temperature->save();
+                        break;
+                    case "indoor CO2":
+                        $CO2 = $this->getNameCmd($i, $room_name, 'CO2');
+                        $CO2->setType('info');
+                        $CO2->setSubType('numeric');
+                        $CO2->setIsHistorized(1);
+                        $CO2->setUnite('ppm');
+                        $CO2->save();
+                        break;
+                    case "indoor volatile organic compounds":
+                        $CO2 = $this->getNameCmd($i, $room_name, 'COV');
+                        $CO2->setType('info');
+                        $CO2->setIsHistorized(1);
+                        $CO2->setSubType('numeric');
+                        $CO2->setUnite('ppm');
+                        $CO2->save();
+                        break;
                 }
 
-                $this->setLogical($i, $room_name, 'boost-enable', 'info', '', 'binary');
-                $this->setLogical($i, $room_name, 'boost-remaining', 'info', '', 'numeric');
+                $boostenable = $this->getNameCmd($i, $room_name, 'boost-enable');
+                $boostenable->setType('info');
+                $boostenable->setSubType('binary');
+                $boostenable->save();
 
+                $boostremaining = $this->getNameCmd($i, $room_name, 'boost-remaining');
+                $boostremaining->setType('info');
+                $boostremaining->setSubType('numeric');
+                $boostremaining->save();
 
-                $this->setLogical($i, $room_name, 'changeProfil', 'action', '', 'other');
-                $this->setLogical($i, $room_name, 'boostON', 'action', '', 'other');
-                $this->setLogical($i, $room_name, 'boostOFF', 'action', '', 'other');
+                $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
+                $changeProfil->setType('action');
+                $changeProfil->setSubType('slider');
+                $changeProfil->setConfiguration("minValue", 0);
+                $changeProfil->setConfiguration("maxValue", 2);
+                $changeProfil->setValue($profil->getId());
+                $changeProfil->save();
+
+                $boostON = $this->getNameCmd($i, $room_name, 'boostON');
+                $boostON->setType('action');
+                $boostON->setSubType('other');
+                $boostON->setConfiguration("request", '{"enable": true, "level": 200, "timeout": 900};');
+                //   $boostON->setValue($profil->getId());
+                $boostON->save();
+
+                $boostOFF = $this->getNameCmd($i, $room_name, 'boostOFF');
+                $boostOFF->setType('action');
+                $boostOFF->setSubType('other');
+                //    $boostOFF->setValue($profil->getId());
+                $boostOFF->save();
             }
-
         }
 
         if ($this->getIsEnable() == 1) {
@@ -142,29 +221,44 @@ class healthboxCmd extends cmd
         }
 
         $eqLogic = $this->getEqlogic();
-        $request = jeedom::evaluateExpression($this->getConfiguration("request", ""));
 
-        $p = explode(":", $this->getLogicalId());
+        $index = explode(":", $this->getLogicalId())[0];
+        $command = explode(":", $this->getLogicalId())[1];
 
-        if ($p[1] == 'changeProfil') {
-            if (is_numeric($request)) {
+        if ($this->getSubType() == 'slider') {
+            $value = $_options['slider'];
+        } else {
+            $value = $this->getConfiguration("request", "");
+        }
+        $result = jeedom::evaluateExpression($value);
+
+        switch ($command) {
+
+            case "changeProfil":
+                if (is_numeric($result)) {
+                    $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+                    $api->changeProfil($index, intval($result));
+                } else {
+                    log::add('healthbox', 'error', 'Commande changeProfil : Donnée non numérique');
+                    return false;
+                }
+                break;
+
+            case "boostON":
+                $request = substr($result, 0, -1);
+                if ($this->isJson($request)) {
+                    $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
+                    $api->enableBoost($index, $request);
+                } else {
+                    log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
+                    return false;
+                }
+                break;
+
+            case "boostOFF":
                 $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-                $api->changeProfil($p[0], intval($request));
-            } else {
-                log::add('healthbox', 'error', 'Commande changeProfil : Donnée non numérique');
-                return false;
-            }
-        } elseif ($p[1] == 'boostON') {
-            if ($this->isJson($request)) {
-                $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-                $api->enableBoost($p[0], $request);
-            } else {
-                log::add('healthbox', 'error', 'Commande boostON : JSON invalide');
-                return false;
-            }
-        } elseif ($p[1] == 'boostOFF') {
-            $api = new healthbox_api($eqLogic->getConfiguration('iphealthbox'));
-            $api->disableBoost($p[0]);
+                $api->disableBoost($index);
+                break;
         }
 
         if ($eqLogic->getIsEnable() == 1) {

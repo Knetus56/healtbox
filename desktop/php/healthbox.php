@@ -147,6 +147,24 @@ $eqLogics = eqLogic::byType($plugin->getId());
 									<input type="text" class="eqLogicAttr form-control" data-l1key="configuration"
 										data-l2key="iphealthbox" placeholder="{{ 192.168.1.20 }}">
 								</div>
+
+								<label class="col-sm-4 control-label">{{Actualisation}}
+									<sup><i class="fas fa-question-circle tooltips"
+											title="{{Fréquence de rafraîchissement des commandes infos de l'équipement}}"></i></sup>
+								</label>
+								<div class="col-sm-6">
+									<div class="input-group">
+										<input type="text" class="eqLogicAttr form-control roundedLeft"
+											data-l1key="configuration" data-l2key="autorefresh"
+											placeholder="{{Cliquer sur ? pour afficher l'assistant cron}}">
+										<span class="input-group-btn">
+											<a class="btn btn-default cursor jeeHelper roundedRight" data-helper="cron"
+												title="Assistant cron">
+												<i class="fas fa-question-circle"></i>
+											</a>
+										</span>
+									</div>
+								</div>
 							</div>
 						</div>
 
@@ -169,15 +187,16 @@ $eqLogics = eqLogic::byType($plugin->getId());
 			<div role="tabpanel" class="tab-pane" id="commandtab">
 				<br>
 				<div class="table-responsive">
-					<table id="table_cmd" class="table table-bordered table-condensed">
+					<table id="table_cmd" class="table tree table-bordered table-condensed table-striped">
 						<thead>
 							<tr>
-								<th class="hidden-xs" style="min-width:50px;width:70px;">ID</th>
-								<th style="min-width:200px;width:350px;">{{Nom}}</th>
-								<th>{{Type}}</th>
-								<th style="min-width:260px;">{{Options}}</th>
+								<th class="hidden-xs" style="min-width:50px;width:70px;"> ID</th>
+								<th style="min-width:150px;width:300px;">{{Nom}}</th>
+								<th style="width:130px;">{{Type}}</th>
+								<th style="min-width:260px;width:260px;">{{Valeur}}</th>
 								<th>{{Etat}}</th>
-								<th style="min-width:80px;width:200px;">{{Actions}}</th>
+								<th style="min-width:260px;width:310px;">{{Options}}</th>
+								<th style="min-width:80px;width:140px;">{{Actions}}</th>
 							</tr>
 						</thead>
 						<tbody>
