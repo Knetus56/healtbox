@@ -30,8 +30,8 @@ Commandes INFO:
 - 'nom de la piece':debit : retourne le débit d'air du capteur de la pièce en %.
 - 'nom de la piece':COV : retourne le taux de COV pour les capteurs équipés.
 - 'nom de la piece':CO2 : retourne le taux de CO2 pour les capteurs équipés.
-- 'nom de la piece':boost-timeout : retourne le temps restant du BOOST.
-- 'nom de la piece':boost-enable : retourne l'état du BOOST :
+- 'nom de la piece':boost-remaining : retourne le temps restant du BOOST.
+- 'nom de la piece':boost-status : retourne l'état du BOOST :
    - 0 : Inactif
    - 1 : Actif
 - 'nom de la piece':profil : retourne l'état du Profil :
@@ -45,11 +45,7 @@ Commandes ACTION:
 
 la commande BOOST permet d'activer le boost dans une piece selon un temps désiré
 
-> IMPORTANT :  Bien mettre des apostrophes entourant la commande JSON
-
-- 'nom de la piece':boostOFF  =  laisser vide
-- 'nom de la piece':boostON  = '{"enable": true, "level": 200, "timeout": 900}' ou : 
-   - enable : laisser a true
+- 'nom de la piece':boost-toogle  = '{"level": 200, "timeout": 900}' ou : 
    - level : niveau de ventilation voulue.
    - timeout : temps voulu du boost en seconde.
 

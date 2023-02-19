@@ -24,50 +24,68 @@ class healthbox_api
         return $this->_ip;
     }
     // ================================================================================
-    public function getData()
+    private function _getData($url)
     {
         $session = curl_init();
 
         curl_setopt_array($session, [
-            CURLOPT_URL => "http://" . $this->_ip . self::URL_DATA,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
-        ]);
-
-        $json = curl_exec($session);
-        curl_close($session);
-        return json_decode($json, true);
-    }
-    // ================================================================================
-    public function getBoost($i)
-    {
-        $session = curl_init();
-
-        curl_setopt_array($session, [
-            CURLOPT_URL => "http://" . $this->_ip . self::URL_BOOST . $i,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
-        ]);
-
-        $json = curl_exec($session);
-        curl_close($session);
-        return json_decode($json, true);
-    }
-    // ================================================================================
-    public function put($url, $data)
-    {
-        $curl = curl_init();
-        curl_setopt_array($curl, [
             CURLOPT_URL => "http://" . $this->_ip . $url,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FAILONERROR => true,
+            CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
+        ]);
+
+        $json = curl_exec($session);
+
+        if (curl_errno($session))
+            $error_msg = curl_error($session);
+
+        curl_close($session);
+
+        if (isset($error_msg)) {
+            log::add('healthbox', 'error', 'CURL : ' . $error_msg);
+            return false;
+        }
+
+        return json_decode($json, true);
+    }
+    // ================================================================================
+    private function _put($url, $data)
+    {
+        $session = curl_init();
+
+        curl_setopt_array($session, [
+            CURLOPT_URL => "http://" . $this->_ip . $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FAILONERROR => true,
             CURLOPT_CUSTOMREQUEST => "PUT",
             CURLOPT_POSTFIELDS => $data,
             CURLOPT_HTTPHEADER => ["Content-Type: application/json"],
         ]);
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
+        $json = curl_exec($session);
+
+        if (curl_errno($session))
+            $error_msg = curl_error($session);
+
+        curl_close($session);
+
+        if (isset($error_msg)) {
+            log::add('healthbox', 'error', 'CURL : ' . $error_msg);
+            return false;
+        }
+
+        return true;
+    }
+    // ================================================================================
+    public function getData()
+    {
+        return $this->_getData(self::URL_DATA);
+    }
+    // ================================================================================
+    public function getBoost($i)
+    {
+        return $this->_getData(self::URL_BOOST . $i);
     }
     // ================================================================================
     public function getDebit($json)
@@ -89,16 +107,16 @@ class healthbox_api
     // ================================================================================
     public function changeProfil($i, $profil)
     {
-        $this->put(self::URL_PROFIL . $i . '/profile_name', '"' . self::PROFIL[$profil] . '"');
+        $this->_put(self::URL_PROFIL . $i . '/profile_name', '"' . self::PROFIL[$profil] . '"');
     }
     // ================================================================================
     public function enableBoost($i, $j)
     {
-        $this->put(self::URL_BOOST . $i, $j);
+        $this->_put(self::URL_BOOST . $i, $j);
     }
     // ================================================================================
     public function disableBoost($i)
     {
-        $this->put(self::URL_BOOST . $i, '{"enable": false}');
+        $this->_put(self::URL_BOOST . $i, '{"enable": false}');
     }
 }
