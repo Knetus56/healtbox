@@ -75,9 +75,8 @@ class healthbox extends eqLogic
                     $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
                 }
             }
-
-            //    $this->refreshWidget();
         }
+        //    $this->refreshWidget();
     }
     // ================================================================================
     public function preUpdate()
@@ -172,7 +171,7 @@ class healthbox extends eqLogic
                             break;
                     }
                 }
-             
+
                 $boostenable = $this->getNameCmd($i, $room_name, 'boost-status');
                 $boostenable->setType('info');
                 $boostenable->setSubType('binary');
@@ -200,10 +199,10 @@ class healthbox extends eqLogic
                 $boostON->save();
 
             }
+        }
 
-            if ($this->getIsEnable() == 1) {
-                $this->updatehealthbox();
-            }
+        if ($this->getIsEnable() == 1) {
+            $this->updatehealthbox();
         }
     }
 }
