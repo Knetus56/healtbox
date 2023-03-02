@@ -67,14 +67,15 @@ class healthbox extends eqLogic
                             $this->checkAndUpdateCmd($i . ':' . 'COV', $api->getSensor($sensor, 'concentration'));
                             break;
                     }
+                }
 
-                    $boost = $api->getBoost($i);
-                    if ($boost) {
-                        $this->checkAndUpdateCmd($i . ':boost-status', $boost['enable']);
-                        $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
-                    }
+                $boost = $api->getBoost($i);
+                if ($boost) {
+                    $this->checkAndUpdateCmd($i . ':boost-status', $boost['enable']);
+                    $this->checkAndUpdateCmd($i . ':boost-remaining', $boost['remaining']);
                 }
             }
+
             //    $this->refreshWidget();
         }
     }
@@ -170,33 +171,34 @@ class healthbox extends eqLogic
                             $CO2->save();
                             break;
                     }
-
-                    $boostenable = $this->getNameCmd($i, $room_name, 'boost-status');
-                    $boostenable->setType('info');
-                    $boostenable->setSubType('binary');
-                    $boostenable->save();
-
-                    $boostremaining = $this->getNameCmd($i, $room_name, 'boost-remaining');
-                    $boostremaining->setType('info');
-                    $boostremaining->setSubType('numeric');
-                    $boostremaining->save();
-
-                    $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
-                    $changeProfil->setType('action');
-                    $changeProfil->setSubType('slider');
-                    $changeProfil->setConfiguration("minValue", 0);
-                    $changeProfil->setConfiguration("maxValue", 2);
-                    $changeProfil->setConfiguration("listValue", '0|eco;1|health;2|intense');
-                    $changeProfil->setValue($profil->getId());
-                    $changeProfil->save();
-
-                    $boostON = $this->getNameCmd($i, $room_name, 'boost-toogle');
-                    $boostON->setType('action');
-                    $boostON->setSubType('other');
-                    $boostON->setConfiguration("request", '{"level": 200, "timeout": 900};');
-                    $boostON->setValue($boostenable->getId());
-                    $boostON->save();
                 }
+             
+                $boostenable = $this->getNameCmd($i, $room_name, 'boost-status');
+                $boostenable->setType('info');
+                $boostenable->setSubType('binary');
+                $boostenable->save();
+
+                $boostremaining = $this->getNameCmd($i, $room_name, 'boost-remaining');
+                $boostremaining->setType('info');
+                $boostremaining->setSubType('numeric');
+                $boostremaining->save();
+
+                $changeProfil = $this->getNameCmd($i, $room_name, 'changeProfil');
+                $changeProfil->setType('action');
+                $changeProfil->setSubType('slider');
+                $changeProfil->setConfiguration("minValue", 0);
+                $changeProfil->setConfiguration("maxValue", 2);
+                $changeProfil->setConfiguration("listValue", '0|eco;1|health;2|intense');
+                $changeProfil->setValue($profil->getId());
+                $changeProfil->save();
+
+                $boostON = $this->getNameCmd($i, $room_name, 'boost-toogle');
+                $boostON->setType('action');
+                $boostON->setSubType('other');
+                $boostON->setConfiguration("request", '{"level": 200, "timeout": 900};');
+                $boostON->setValue($boostenable->getId());
+                $boostON->save();
+
             }
 
             if ($this->getIsEnable() == 1) {
