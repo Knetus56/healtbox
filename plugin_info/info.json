@@ -2,7 +2,7 @@
    "id":"healthbox",
    "name":"Healthbox",
    "description":{
-      "fr_FR":"Ce plugin Jeedom permet de controler les VMC RENSON HEALTBOX 3.<br/>Prérequis :<br/>Pour pouvoir récupérer les différentes valeurs de votre VMC, il vous faut obtenir une clé.<br/>Pour cela envoyer un mail à service@renson.been en spécifiant bien le numéro de série de l'appareil."
+      "fr_FR":"Ce plugin Jeedom permet de controler les VMC RENSON HEALTBOX 3. <br/> Prérequis : <br/> Pour pouvoir récupérer les différentes valeurs de votre VMC, il vous faut obtenir une clé.<br/>Pour cela envoyer un mail à service@renson.been en spécifiant bien le numéro de série de l'appareil."
    },
    "licence":"AGPL",
    "author":"Knetus",
